@@ -1,3 +1,0 @@
-/home/ficova/Projects/AntWorld/build/CMakeFiles/Snake++.dir
-/home/ficova/Projects/AntWorld/build/CMakeFiles/edit_cache.dir
-/home/ficova/Projects/AntWorld/build/CMakeFiles/rebuild_cache.dir
