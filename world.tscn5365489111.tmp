@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://brbet0ec37plp" path="res://assets/mapTile.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://dkegfiknufng6" path="res://map_sprite_2D.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://btj35ppqpy6po" path="res://camera_2D_world.gd" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://crtu12uxe0amb" path="res://player.tscn" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://b78flgmvjdua6" path="res://food.tscn" id="5_036b0"]
 
 [node name="World" type="Node2D" unique_id=1978193320]
 script = ExtResource("1_dwbse")
@@ -21,3 +23,8 @@ script = ExtResource("2_fj7yv")
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("3_tlwt5")
+
+[node name="Player" parent="." unique_id=1854196492 instance=ExtResource("4_aqk2v")]
+position = Vector2(957, 269)
+
+[node name="Food" parent="." unique_id=1288279822 instance=ExtResource("5_036b0")]

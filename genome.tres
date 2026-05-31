@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Genome" format=3 uid="uid://bppo61rom1bv5"]
+
+[ext_resource type="Script" uid="uid://ch0f51bs1ihvs" path="res://genome.gd" id="1_1f5ym"]
+
+[resource]
+script = ExtResource("1_1f5ym")
+metadata/_custom_type_script = "uid://ch0f51bs1ihvs"
