@@ -15,7 +15,6 @@ size = Vector2(16.5, 47)
 [node name="Player" type="CharacterBody2D" unique_id=1069072818]
 motion_mode = 1
 script = ExtResource("1_i3pqv")
-mass = null
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=620570182]
 limit_enabled = false
@@ -29,11 +28,12 @@ shape = SubResource("CircleShape2D_4flbx")
 
 [node name="Head" type="Area2D" parent="." unique_id=1547799924]
 
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="Head" unique_id=1023466728]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head" unique_id=1023466728]
 position = Vector2(-8.5, 0)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="Mouth" type="Area2D" parent="." unique_id=823052363]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth" unique_id=167704163]
 position = Vector2(23.75, -0.5)
