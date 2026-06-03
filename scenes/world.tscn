@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://d2mltrc36pm1y"]
+
+[ext_resource type="Texture2D" uid="uid://brbet0ec37plp" path="res://assets/mapTile.png" id="1_f3sb7"]
+[ext_resource type="Script" uid="uid://dkegfiknufng6" path="res://scripts/map.gd" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://btj35ppqpy6po" path="res://scripts/camera_world.gd" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://crtu12uxe0amb" path="res://scenes/player.tscn" id="5_036b0"]
+[ext_resource type="PackedScene" uid="uid://b78flgmvjdua6" path="res://scenes/food.tscn" id="6_dwbse"]
+
+[node name="World" type="Node2D" unique_id=1978193320]
+
+[node name="MapSprite2D" type="Sprite2D" parent="." unique_id=944645621]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_f3sb7")
+region_enabled = true
+region_rect = Rect2(0, 0, 10000, 10000)
+script = ExtResource("2_fj7yv")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=674570870]
+limit_enabled = false
+position_smoothing_enabled = true
+script = ExtResource("3_tlwt5")
+
+[node name="Player" parent="." unique_id=1069072818 instance=ExtResource("5_036b0")]
+position = Vector2(574, 350)
+mass = 10.0
+
+[node name="Food" parent="." unique_id=2091610270 instance=ExtResource("6_dwbse")]

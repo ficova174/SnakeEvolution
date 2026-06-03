@@ -7,15 +7,15 @@ const MIN_ZOOM: float = 0.5
 const MAX_ZOOM: float = 20.0
 
 
-func _unhandled_input(_event: InputEvent) -> void:
-	zoom_camera()
-
 func _process(delta: float) -> void:
 	move_camera(delta)
 
 func move_camera(delta: float) -> void:
 	var direction = Input.get_vector("left", "right", "up", "down")
 	position += CAMERA_SPEED * delta * direction
+
+func _unhandled_input(_event: InputEvent) -> void:
+	zoom_camera()
 
 func zoom_camera() -> void:
 	var direction1D: float = 0

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://csekubfxstp2"]
+
+[ext_resource type="Script" uid="uid://d1xh528otsnbu" path="res://scripts/body_segment.gd" id="1_bae6x"]
+[ext_resource type="Texture2D" uid="uid://clppydcgaroh5" path="res://assets/body.png" id="1_po862"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bae6x"]
+radius = 32.06244
+
+[node name="BodySegment" type="Area2D" unique_id=138247407]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_bae6x")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=182603496]
+texture = ExtResource("1_po862")
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=74376346]
+shape = SubResource("CircleShape2D_bae6x")
