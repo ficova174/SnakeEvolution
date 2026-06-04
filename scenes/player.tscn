@@ -18,7 +18,7 @@ genome = ExtResource("2_qhqgy")
 segment_scene = ExtResource("3_qlg0r")
 
 [node name="Head" type="CharacterBody2D" parent="." unique_id=1346012267]
-collision_mask = 0
+collision_layer = 2
 input_pickable = true
 script = ExtResource("3_dqkch")
 
@@ -34,7 +34,8 @@ enabled = false
 limit_enabled = false
 
 [node name="Mouth" type="Area2D" parent="Head" unique_id=823052363]
-collision_mask = 6
+collision_layer = 0
+collision_mask = 14
 input_pickable = false
 monitorable = false
 
