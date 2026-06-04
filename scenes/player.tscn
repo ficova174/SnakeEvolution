@@ -16,7 +16,6 @@ size = Vector2(16.5, 47)
 script = ExtResource("1_i3pqv")
 genome = ExtResource("2_qhqgy")
 segment_scene = ExtResource("3_qlg0r")
-mass = null
 
 [node name="Head" type="CharacterBody2D" parent="." unique_id=1346012267]
 collision_mask = 0
@@ -31,6 +30,7 @@ shape = SubResource("CircleShape2D_4flbx")
 texture = ExtResource("1_onrkg")
 
 [node name="Camera2D" type="Camera2D" parent="Head" unique_id=620570182]
+enabled = false
 limit_enabled = false
 
 [node name="Mouth" type="Area2D" parent="Head" unique_id=823052363]

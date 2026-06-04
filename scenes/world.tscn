@@ -13,7 +13,6 @@ texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("1_f3sb7")
 region_enabled = true
-region_rect = Rect2(0, 0, 10000, 10000)
 script = ExtResource("2_fj7yv")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=674570870]

@@ -7,8 +7,9 @@ extends Node2D
 
 @export var mass: float = 10.0
 var speed: float
-var rotation_speed: float
+@export var rotation_speed: float
 var body_segments: Array[BodySegment]
+@export var segment_distance: float = 20.0
 
 @onready var head: CharacterBody2D = $Head
 @onready var mouth: Area2D = $Head/Mouth
@@ -52,3 +53,17 @@ func _on_mouth_body_entered(node: Node2D) -> void:
 
 func die() -> void:
 	print("dead")
+
+func _physics_process(delta: float) -> void:
+	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)
+	var distance: float = body_segments[0].position.distance_to(head.position)
+	if distance != segment_distance:
+		body_segments[0].position += (distance - segment_distance) * body_to_head
+
+	for i in range(1, body_segments.size()):
+		var front: BodySegment = body_segments[i-1]
+		var back: BodySegment = body_segments[i]
+		var back_to_front: Vector2 = back.position.direction_to(front.position)
+		distance = back.position.distance_to(front.position)
+		if distance != segment_distance:
+			back.position += (distance - segment_distance) * back_to_front
