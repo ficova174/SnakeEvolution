@@ -54,7 +54,7 @@ func _on_mouth_body_entered(node: Node2D) -> void:
 func die() -> void:
 	print("dead")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)
 	var distance: float = body_segments[0].position.distance_to(head.position)
 	if distance != segment_distance:
@@ -65,5 +65,11 @@ func _physics_process(delta: float) -> void:
 		var back: BodySegment = body_segments[i]
 		var back_to_front: Vector2 = back.position.direction_to(front.position)
 		distance = back.position.distance_to(front.position)
+
+		if not back.moving and distance < segment_distance:
+			continue
+		elif not back.moving and distance >= segment_distance:
+			back.moving = true
+
 		if distance != segment_distance:
 			back.position += (distance - segment_distance) * back_to_front
