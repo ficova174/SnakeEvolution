@@ -5,7 +5,7 @@ extends Node2D
 @export var genome: Genome
 @export var segment_scene: PackedScene
 
-@export var mass: float = 10.0
+@export var mass: int = 10
 var speed: float
 @export var rotation_speed: float
 var body_segments: Array[BodySegment]

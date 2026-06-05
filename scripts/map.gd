@@ -2,8 +2,8 @@ extends Sprite2D
 
 
 const CELL_SIZE: int = 58
-var width: int = 10
-var height: int = 10
+@export var width: int = 10
+@export var height: int = 10
 
 
 func _ready() -> void:
