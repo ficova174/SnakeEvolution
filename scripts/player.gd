@@ -1,6 +1,8 @@
 class_name Player
 extends Node2D
 
+signal enter_snake
+signal exit_snake
 signal snake_died
 
 @export var genome: Genome
@@ -14,6 +16,7 @@ var body_segments: Array[BodySegment]
 
 @onready var head: CharacterBody2D = $Head
 @onready var mouth: Area2D = $Head/Mouth
+@onready var camera: Camera2D = $Head/Camera2D
 @onready var body_container: Node2D = $BodyContainer
 
 
@@ -26,10 +29,13 @@ func _ready() -> void:
 	mouth.body_entered.connect(_on_mouth_body_entered)
 
 	var body_segment: BodySegment = segment_scene.instantiate()
+	body_segment.input_event.connect(_on_body_clicked)
 	body_segment.position = head.position
 	body_container.add_child(body_segment)
 	body_segments.append(body_segment)
 	grow()
+
+	head.input_event.connect(_on_head_clicked)
 
 func _on_mouth_area_entered(area: Area2D) -> void:
 	if area is Food:
@@ -59,6 +65,7 @@ func grow() -> void:
 
 	while actual_mass + segment_mass < target_mass:
 		var new_segment: BodySegment = segment_scene.instantiate()
+		new_segment.input_event.connect(_on_body_clicked)
 		new_segment.position = body_segments[-1].position
 		body_container.add_child(new_segment)
 		body_segments.append(new_segment)
@@ -67,6 +74,22 @@ func grow() -> void:
 func die() -> void:
 	snake_died.emit()
 	queue_free()
+
+func _on_head_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	switch_camera(event)
+
+func _on_body_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	switch_camera(event)
+
+func switch_camera(event: InputEvent) -> void:
+	if event.is_action_pressed("enter_snake"):
+		camera.enabled = true
+		enter_snake.emit()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("exit_snake"):
+		camera.enabled = false
+		exit_snake.emit()
 
 func _physics_process(_delta: float) -> void:
 	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)

@@ -5,6 +5,7 @@
 [ext_resource type="Resource" uid="uid://bppo61rom1bv5" path="res://genome.tres" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://sl47mch8kp61" path="res://scripts/head.gd" id="3_dqkch"]
 [ext_resource type="PackedScene" uid="uid://csekubfxstp2" path="res://scenes/body_segment.tscn" id="3_qlg0r"]
+[ext_resource type="Script" uid="uid://0xn051yfjh2d" path="res://scripts/camera_snake.gd" id="6_tuyoq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
 radius = 32.01562
@@ -13,6 +14,7 @@ radius = 32.01562
 size = Vector2(16.5, 47)
 
 [node name="Player" type="Node2D" unique_id=974665004]
+z_index = 1
 script = ExtResource("1_i3pqv")
 genome = ExtResource("2_qhqgy")
 segment_scene = ExtResource("3_qlg0r")
@@ -33,6 +35,7 @@ texture = ExtResource("1_onrkg")
 [node name="Camera2D" type="Camera2D" parent="Head" unique_id=620570182]
 enabled = false
 limit_enabled = false
+script = ExtResource("6_tuyoq")
 
 [node name="Mouth" type="Area2D" parent="Head" unique_id=823052363]
 collision_layer = 0
