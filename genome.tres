@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Genome" format=3 uid="uid://bppo61rom1bv5"]
 
-[ext_resource type="Script" uid="uid://ch0f51bs1ihvs" path="res://scripts/genome.gd" id="1_1f5ym"]
+[ext_resource type="Script" uid="uid://ch0f51bs1ihvs" path="res://scripts/snake/genome.gd" id="1_1f5ym"]
 
 [resource]
 script = ExtResource("1_1f5ym")

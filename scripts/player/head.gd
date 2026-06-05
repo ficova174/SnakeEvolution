@@ -1,15 +1,5 @@
-class_name Head
-extends CharacterBody2D
+extends Head
 
-
-var min_speed: float
-var max_speed: float
-var acceleration: float
-var speed: float
-
-
-func _ready() -> void:
-	speed = min_speed
 
 func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position())
