@@ -38,14 +38,22 @@ func _on_mouth_area_entered(area: Area2D) -> void:
 		call_deferred("grow")
 
 func grow() -> void:
-	if body_segments.size() > mass:
-		push_error("More body segments than mass")
-	else:
-		while body_segments.size() < mass:
-			var body_segment: BodySegment = segment_scene.instantiate()
-			body_segment.position = body_segments[-1].position
-			body_container.add_child(body_segment)
-			body_segments.append(body_segment)
+	var segment_mass: int = body_segments[0].mass
+	var target_mass: int = mass
+	var actual_mass: int = body_segments.size() * segment_mass
+
+	if actual_mass > target_mass:
+		print("Target mass : ", target_mass)
+		print("Actual mass : ", actual_mass)
+		push_error("More body segments than expected")
+		return
+
+	while actual_mass + segment_mass < target_mass:
+		var new_segment: BodySegment = segment_scene.instantiate()
+		new_segment.position = body_segments[-1].position
+		body_container.add_child(new_segment)
+		body_segments.append(new_segment)
+		actual_mass += segment_mass
 
 func _on_mouth_body_entered(node: Node2D) -> void:
 	if node is Player and node != self:
@@ -57,8 +65,7 @@ func die() -> void:
 func _physics_process(_delta: float) -> void:
 	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)
 	var distance: float = body_segments[0].position.distance_to(head.position)
-	if distance != segment_distance:
-		body_segments[0].position += (distance - segment_distance) * body_to_head
+	body_segments[0].position += (distance - segment_distance) * body_to_head
 
 	for i in range(1, body_segments.size()):
 		var front: BodySegment = body_segments[i-1]
@@ -71,5 +78,4 @@ func _physics_process(_delta: float) -> void:
 		elif not back.moving and distance >= segment_distance:
 			back.moving = true
 
-		if distance != segment_distance:
-			back.position += (distance - segment_distance) * back_to_front
+		back.position += (distance - segment_distance) * back_to_front

@@ -48,6 +48,8 @@ shape = SubResource("WorldBoundaryShape2D_qfnet")
 
 [node name="Player" parent="." unique_id=1069072818 instance=ExtResource("5_036b0")]
 position = Vector2(100, 327)
+rotation_speed = null
+segment_distance = null
 
 [node name="BodySegment" parent="." unique_id=138247407 instance=ExtResource("6_qfnet")]
 position = Vector2(349, 57)

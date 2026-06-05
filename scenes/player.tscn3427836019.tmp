@@ -16,6 +16,9 @@ size = Vector2(16.5, 47)
 script = ExtResource("1_i3pqv")
 genome = ExtResource("2_qhqgy")
 segment_scene = ExtResource("3_qlg0r")
+mass = -67
+rotation_speed = null
+segment_distance = null
 
 [node name="Head" type="CharacterBody2D" parent="." unique_id=1346012267]
 collision_layer = 2
