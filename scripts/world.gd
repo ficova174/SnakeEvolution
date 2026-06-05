@@ -19,20 +19,18 @@ func _ready() -> void:
 	down_border.position = Vector2.DOWN * map.CELL_SIZE * map.height
 	right_border.position = Vector2.RIGHT * map.CELL_SIZE * map.width
 
-	player.enter_snake.connect(_on_enter_snake)
 	player.exit_snake.connect(_on_exit_snake)
 	player.snake_died.connect(_on_snake_died)
 
 	spawn_small_food()
 
-func _on_enter_snake() -> void:
-	camera.enabled = false
-
-func _on_exit_snake() -> void:
-	camera.enabled = true
+func _on_exit_snake(camera_center: Vector2, camera_zoom: Vector2) -> void:
+	camera.position = camera_center
+	camera.zoom = camera_zoom
+	camera.make_current()
+	camera.reset_smoothing()
 
 func _on_snake_died() -> void:
-	camera.enabled = true
 	for body_segment in player.body_segments:
 		var food: Food = big_food_scene.instantiate()
 		food.position = body_segment.global_position

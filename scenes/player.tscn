@@ -33,7 +33,6 @@ shape = SubResource("CircleShape2D_4flbx")
 texture = ExtResource("1_onrkg")
 
 [node name="Camera2D" type="Camera2D" parent="Head" unique_id=620570182]
-enabled = false
 limit_enabled = false
 script = ExtResource("6_tuyoq")
 

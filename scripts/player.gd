@@ -1,8 +1,8 @@
 class_name Player
 extends Node2D
 
-signal enter_snake
-signal exit_snake
+
+signal exit_snake(camera_center: Vector2, camera_zoom: Vector2)
 signal snake_died
 
 @export var genome: Genome
@@ -29,13 +29,14 @@ func _ready() -> void:
 	mouth.body_entered.connect(_on_mouth_body_entered)
 
 	var body_segment: BodySegment = segment_scene.instantiate()
-	body_segment.input_event.connect(_on_body_clicked)
 	body_segment.position = head.position
 	body_container.add_child(body_segment)
 	body_segments.append(body_segment)
-	grow()
 
 	head.input_event.connect(_on_head_clicked)
+	body_segment.input_event.connect(_on_body_clicked)
+
+	grow()
 
 func _on_mouth_area_entered(area: Area2D) -> void:
 	if area is Food:
@@ -72,25 +73,26 @@ func grow() -> void:
 		actual_mass += segment_mass
 
 func die() -> void:
-	camera.enabled = false
+	leave_snake()
 	snake_died.emit()
 	queue_free()
 
 func _on_head_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	snake_focus(event)
+	follow_snake(event)
 
 func _on_body_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	snake_focus(event)
+	follow_snake(event)
 
-func snake_focus(event: InputEvent) -> void:
+func follow_snake(event: InputEvent) -> void:
 	if event.is_action_pressed("enter_snake"):
-		camera.enabled = true
-		enter_snake.emit()
+		camera.make_current()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit_snake"):
-		camera.enabled = false
-		exit_snake.emit()
+		leave_snake()
+
+func leave_snake() -> void:
+	exit_snake.emit(camera.global_position, camera.zoom)
 
 func _physics_process(_delta: float) -> void:
 	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)
