@@ -18,6 +18,7 @@ genome = ExtResource("2_qhqgy")
 segment_scene = ExtResource("3_qlg0r")
 
 [node name="Head" type="CharacterBody2D" parent="." unique_id=1346012267]
+z_index = 1
 collision_layer = 2
 input_pickable = true
 script = ExtResource("3_dqkch")
