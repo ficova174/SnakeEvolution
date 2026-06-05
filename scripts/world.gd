@@ -32,6 +32,7 @@ func _on_exit_snake() -> void:
 	camera.enabled = true
 
 func _on_snake_died() -> void:
+	camera.enabled = true
 	for body_segment in player.body_segments:
 		var food: Food = big_food_scene.instantiate()
 		food.position = body_segment.global_position

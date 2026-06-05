@@ -72,16 +72,17 @@ func grow() -> void:
 		actual_mass += segment_mass
 
 func die() -> void:
+	camera.enabled = false
 	snake_died.emit()
 	queue_free()
 
 func _on_head_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	switch_camera(event)
+	snake_focus(event)
 
 func _on_body_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	switch_camera(event)
+	snake_focus(event)
 
-func switch_camera(event: InputEvent) -> void:
+func snake_focus(event: InputEvent) -> void:
 	if event.is_action_pressed("enter_snake"):
 		camera.enabled = true
 		enter_snake.emit()
