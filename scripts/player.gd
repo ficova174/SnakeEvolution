@@ -1,6 +1,7 @@
 class_name Player
 extends Node2D
 
+signal snake_died
 
 @export var genome: Genome
 @export var segment_scene: PackedScene
@@ -8,8 +9,8 @@ extends Node2D
 @export var mass: int = 10
 var speed: float
 @export var rotation_speed: float
-var body_segments: Array[BodySegment]
 @export var segment_distance: float = 20.0
+var body_segments: Array[BodySegment]
 
 @onready var head: CharacterBody2D = $Head
 @onready var mouth: Area2D = $Head/Mouth
@@ -36,6 +37,14 @@ func _on_mouth_area_entered(area: Area2D) -> void:
 		mass += food.mass
 		food.queue_free()
 		call_deferred("grow")
+	elif area is BodySegment:
+		if not area in body_segments:
+			die()
+
+func _on_mouth_body_entered(body: CharacterBody2D) -> void:
+	if body is Head:
+		if body != head:
+			die()
 
 func grow() -> void:
 	var segment_mass: int = body_segments[0].mass
@@ -55,12 +64,9 @@ func grow() -> void:
 		body_segments.append(new_segment)
 		actual_mass += segment_mass
 
-func _on_mouth_body_entered(node: Node2D) -> void:
-	if node is Player and node != self:
-		die()
-
 func die() -> void:
-	print("dead")
+	snake_died.emit()
+	queue_free()
 
 func _physics_process(_delta: float) -> void:
 	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)

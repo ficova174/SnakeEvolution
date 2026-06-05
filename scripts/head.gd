@@ -1,3 +1,4 @@
+class_name Head
 extends CharacterBody2D
 
 

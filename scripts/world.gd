@@ -5,20 +5,30 @@ extends Node2D
 @onready var right_border = $Borders/RightBorder
 
 @onready var map = $MapSprite2D
-@onready var food_scene: PackedScene = preload("res://scenes/food.tscn")
+@onready var player = $Player
+@export var big_food_scene: PackedScene
+@export var small_food_scene: PackedScene
 
 var max_food: int = 100
-var food_quantity: int = 0
+var small_food_quantity: int = 0
 
 
 func _ready() -> void:
 	down_border.position = Vector2.DOWN * map.CELL_SIZE * map.height
 	right_border.position = Vector2.RIGHT * map.CELL_SIZE * map.width
 
+	player.snake_died.connect(_on_snake_died)
+
+func _on_snake_died() -> void:
+	for body_segment in player.body_segments:
+		var food: Food = big_food_scene.instantiate()
+		food.position = body_segment.global_position
+		call_deferred("add_child", food)
+
 func _physics_process(_delta: float) -> void:
-	if food_quantity < max_food:
-		var food: Food = food_scene.instantiate()
-		food.position[0] = randf_range(0.0, map.width * map.CELL_SIZE)
-		food.position[1] = randf_range(0.0, map.height * map.CELL_SIZE)
-		add_child(food)
-		food_quantity += 1
+	if small_food_quantity < max_food:
+		var small_food: Food = small_food_scene.instantiate()
+		small_food.position[0] = randf_range(0.0, map.width * map.CELL_SIZE)
+		small_food.position[1] = randf_range(0.0, map.height * map.CELL_SIZE)
+		add_child(small_food)
+		small_food_quantity += 1
