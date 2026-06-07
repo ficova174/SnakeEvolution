@@ -5,6 +5,8 @@ extends Node2D
 signal exit_snake(camera_center: Vector2, camera_zoom: Vector2)
 signal snake_died
 
+@export var food_counter: FoodCounter
+
 @export var genome: Genome
 @export var segment_scene: PackedScene
 
@@ -42,6 +44,7 @@ func _on_mouth_area_entered(area: Area2D) -> void:
 	if area is Food:
 		var food: Food = area
 		mass += food.mass
+		food_counter.decrement(food.mass)
 		food.queue_free()
 		call_deferred("grow")
 	elif area is BodySegment:
@@ -73,7 +76,8 @@ func grow() -> void:
 		actual_mass += segment_mass
 
 func die() -> void:
-	leave_snake()
+	if camera.is_current():
+		leave_snake()
 	snake_died.emit()
 	queue_free()
 
