@@ -49,3 +49,5 @@ position = Vector2(23.75, -0.5)
 shape = SubResource("RectangleShape2D_i3pqv")
 
 [node name="BodyContainer" type="Node2D" parent="." unique_id=1920097329]
+
+[node name="BodySegment" parent="BodyContainer" unique_id=425876287 instance=ExtResource("3_qlg0r")]

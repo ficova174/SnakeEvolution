@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://4mmf8siiy5xv"]
+
+[ext_resource type="PackedScene" uid="uid://crtu12uxe0amb" path="res://scenes/snake.tscn" id="1_jv27j"]
+[ext_resource type="Script" uid="uid://bxjxejiccnjd8" path="res://scripts/agent/head.gd" id="2_dhb2b"]
+
+[node name="Agent" unique_id=974665004 instance=ExtResource("1_jv27j")]
+
+[node name="Head" parent="." index="0" unique_id=1346012267]
+script = ExtResource("2_dhb2b")
+number_rays = 10
+fov = 180.0
+
+[node name="RayCastContainer" type="Node2D" parent="Head" index="4" unique_id=45870609]
+
+[node name="RayCast2D" type="RayCast2D" parent="Head/RayCastContainer" index="0" unique_id=672272911]
+target_position = Vector2(300, 0)
+collision_mask = 14
+collide_with_areas = true

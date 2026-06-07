@@ -3,7 +3,7 @@ extends Node2D
 
 
 signal exit_snake(camera_center: Vector2, camera_zoom: Vector2)
-signal snake_died
+signal snake_died(snake: Snake)
 
 @export var food_counter: FoodCounter
 
@@ -14,12 +14,13 @@ signal snake_died
 var speed: float
 @export var rotation_speed: float
 @export var segment_distance: float = 20.0
-var body_segments: Array[BodySegment]
+
+@onready var body_container: Node2D = $BodyContainer
+@onready var body_segments: Array[BodySegment] = [$BodyContainer/BodySegment]
 
 @onready var head: CharacterBody2D = $Head
 @onready var mouth: Area2D = $Head/Mouth
 @onready var camera: Camera2D = $Head/Camera2D
-@onready var body_container: Node2D = $BodyContainer
 
 
 func _ready() -> void:
@@ -27,19 +28,13 @@ func _ready() -> void:
 	head.max_speed = genome.max_speed
 	head.acceleration = genome.acceleration
 
+	head.input_event.connect(_on_head_clicked)
+	body_segments[0].input_event.connect(_on_body_clicked)
 	mouth.area_entered.connect(_on_mouth_area_entered)
 	mouth.body_entered.connect(_on_mouth_body_entered)
 
-	var body_segment: BodySegment = segment_scene.instantiate()
-	body_segment.position = head.position
-	body_container.add_child(body_segment)
-	body_segments.append(body_segment)
-
 	grow()
 	food_counter.increment(mass)
-
-	head.input_event.connect(_on_head_clicked)
-	body_segment.input_event.connect(_on_body_clicked)
 
 func _on_mouth_area_entered(area: Area2D) -> void:
 	if area is Food:
@@ -78,7 +73,7 @@ func grow() -> void:
 func die() -> void:
 	if camera.is_current():
 		leave_snake()
-	snake_died.emit()
+	snake_died.emit(self)
 	queue_free()
 
 func _on_head_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

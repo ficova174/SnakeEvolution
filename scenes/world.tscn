@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://dkegfiknufng6" path="res://scripts/world/map.gd" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cx8sd0qdused0" path="res://scenes/small_food.tscn" id="2_i7141"]
 [ext_resource type="Script" uid="uid://btj35ppqpy6po" path="res://scripts/world/camera_world.gd" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://4mmf8siiy5xv" path="res://agent.tscn" id="5_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://ccshud3cvos5g" path="res://scenes/player.tscn" id="5_036b0"]
-[ext_resource type="PackedScene" uid="uid://csekubfxstp2" path="res://scenes/body_segment.tscn" id="6_qfnet"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qfnet"]
 
@@ -17,6 +17,8 @@ script = ExtResource("1_i7141")
 food_counter = ExtResource("2_7r4gi")
 big_food_scene = ExtResource("2_4mrxx")
 small_food_scene = ExtResource("2_i7141")
+agent_scene = ExtResource("5_7r4gi")
+player_scene = ExtResource("5_036b0")
 
 [node name="MapSprite2D" type="Sprite2D" parent="." unique_id=944645621]
 texture_filter = 1
@@ -52,9 +54,4 @@ shape = SubResource("WorldBoundaryShape2D_qfnet")
 rotation = 4.712389
 shape = SubResource("WorldBoundaryShape2D_qfnet")
 
-[node name="BodySegment" parent="." unique_id=138247407 instance=ExtResource("6_qfnet")]
-position = Vector2(349, 57)
-
-[node name="Player" parent="." unique_id=974665004 instance=ExtResource("5_036b0")]
-position = Vector2(147, 340)
-mass = 10
+[node name="SnakeContainer" type="Node2D" parent="." unique_id=1049815575]
