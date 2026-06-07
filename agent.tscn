@@ -7,12 +7,28 @@
 
 [node name="Head" parent="." index="0" unique_id=1346012267]
 script = ExtResource("2_dhb2b")
-number_rays = 10
-fov = 180.0
+number_rays = 50
+fov = 270.0
 
 [node name="RayCastContainer" type="Node2D" parent="Head" index="4" unique_id=45870609]
 
 [node name="RayCast2D" type="RayCast2D" parent="Head/RayCastContainer" index="0" unique_id=672272911]
-target_position = Vector2(300, 0)
+target_position = Vector2(600, 0)
 collision_mask = 14
 collide_with_areas = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2" unique_id=1686589543]
+
+[node name="Control" type="Control" parent="CanvasLayer" index="0" unique_id=444060274]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" index="0" unique_id=1765595494]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
