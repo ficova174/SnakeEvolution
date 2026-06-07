@@ -20,6 +20,7 @@ func _ready() -> void:
 	player.exit_snake.connect(_on_exit_snake)
 	player.snake_died.connect(_on_snake_died)
 
+	food_counter.setMaxFoodMass(100)
 	spawn_small_food()
 
 func _on_exit_snake(camera_center: Vector2, camera_zoom: Vector2) -> void:
@@ -33,7 +34,6 @@ func _on_snake_died() -> void:
 		var big_food: Food = big_food_scene.instantiate()
 		big_food.position = body_segment.global_position
 		call_deferred("add_child", big_food)
-		food_counter.increment(big_food.mass)
 
 func _physics_process(_delta: float) -> void:
 	spawn_small_food()

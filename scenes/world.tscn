@@ -57,3 +57,4 @@ position = Vector2(349, 57)
 
 [node name="Player" parent="." unique_id=974665004 instance=ExtResource("5_036b0")]
 position = Vector2(147, 340)
+mass = 10

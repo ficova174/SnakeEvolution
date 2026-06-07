@@ -35,16 +35,16 @@ func _ready() -> void:
 	body_container.add_child(body_segment)
 	body_segments.append(body_segment)
 
+	grow()
+	food_counter.increment(mass)
+
 	head.input_event.connect(_on_head_clicked)
 	body_segment.input_event.connect(_on_body_clicked)
-
-	grow()
 
 func _on_mouth_area_entered(area: Area2D) -> void:
 	if area is Food:
 		var food: Food = area
 		mass += food.mass
-		food_counter.decrement(food.mass)
 		food.queue_free()
 		call_deferred("grow")
 	elif area is BodySegment:
@@ -67,7 +67,7 @@ func grow() -> void:
 		push_error("More body segments than expected")
 		return
 
-	while actual_mass + segment_mass < target_mass:
+	while actual_mass + segment_mass <= target_mass:
 		var new_segment: BodySegment = segment_scene.instantiate()
 		new_segment.input_event.connect(_on_body_clicked)
 		new_segment.position = body_segments[-1].position
