@@ -2,12 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://crtu12uxe0amb" path="res://scenes/snake.tscn" id="1_jv27j"]
 [ext_resource type="Script" uid="uid://bxjxejiccnjd8" path="res://scripts/agent/head.gd" id="2_dhb2b"]
+[ext_resource type="Script" uid="uid://er4gseuc58x" path="res://scripts/agent/agent.gd" id="2_lug0u"]
+[ext_resource type="PackedScene" uid="uid://d3topmkqaeamt" path="res://scenes/agent_ui.tscn" id="3_yc63n"]
 
 [node name="Agent" unique_id=974665004 instance=ExtResource("1_jv27j")]
+script = ExtResource("2_lug0u")
 
 [node name="Head" parent="." index="0" unique_id=1346012267]
 script = ExtResource("2_dhb2b")
-number_rays = 50
+number_rays = 100
 fov = 270.0
 
 [node name="RayCastContainer" type="Node2D" parent="Head" index="4" unique_id=45870609]
@@ -16,3 +19,5 @@ fov = 270.0
 target_position = Vector2(600, 0)
 collision_mask = 14
 collide_with_areas = true
+
+[node name="CanvasLayer" parent="." index="2" unique_id=1830477747 instance=ExtResource("3_yc63n")]

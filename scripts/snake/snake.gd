@@ -77,14 +77,15 @@ func die() -> void:
 	queue_free()
 
 func _on_head_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	follow_snake(event)
+	if event.is_action_pressed("enter_snake"):
+		follow_snake()
 
 func _on_body_clicked(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	follow_snake(event)
-
-func follow_snake(event: InputEvent) -> void:
 	if event.is_action_pressed("enter_snake"):
-		camera.make_current()
+		follow_snake()
+
+func follow_snake() -> void:
+	camera.make_current()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit_snake"):

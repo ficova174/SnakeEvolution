@@ -4,7 +4,7 @@ extends Head
 @onready var raycast_container = $RayCastContainer
 @onready var raycasts: Array[RayCast2D] = [$RayCastContainer/RayCast2D]
 
-@export var number_rays: int = 50
+@export var number_rays: int = 100
 @export var fov: float = 270.0
 
 @onready var camera := $Camera2D

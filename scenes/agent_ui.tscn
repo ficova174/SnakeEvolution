@@ -1,56 +1,108 @@
 [gd_scene format=3 uid="uid://d3topmkqaeamt"]
 
-[node name="SnakeStat" type="Control" unique_id=1002639461]
+[ext_resource type="Script" uid="uid://ciun2cdxm4h7g" path="res://scripts/agent/agent_ui.gd" id="1_8la8t"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1830477747]
+script = ExtResource("1_8la8t")
+
+[node name="SnakeStat" type="Control" parent="." unique_id=1002639461]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1830477747]
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1055291274]
+[node name="MarginContainer" type="MarginContainer" parent="SnakeStat" unique_id=1055291274]
+layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -186.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer" unique_id=88139767]
+[node name="PanelContainer" type="PanelContainer" parent="SnakeStat/MarginContainer" unique_id=88139767]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer" unique_id=49575713]
+[node name="VBoxContainer" type="VBoxContainer" parent="SnakeStat/MarginContainer/PanelContainer" unique_id=49575713]
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer" unique_id=243739389]
+[node name="GeneralInfos" type="GridContainer" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer" unique_id=243739389]
 layout_mode = 2
 columns = 2
 
-[node name="Leaderboard" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=362680530]
+[node name="Leaderboard" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/GeneralInfos" unique_id=362680530]
 layout_mode = 2
 text = "Leaderboard place"
 
-[node name="LeaderBoardPlace" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1811471217]
+[node name="LeaderBoardPlace" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/GeneralInfos" unique_id=1811471217]
 layout_mode = 2
-text = "5th"
+text = "None"
 horizontal_alignment = 2
 
-[node name="Score" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=414619213]
+[node name="Score" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/GeneralInfos" unique_id=414619213]
 layout_mode = 2
 text = "Score"
 
-[node name="ScoreValue" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1179053266]
+[node name="ScoreValue" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/GeneralInfos" unique_id=1179053266]
 layout_mode = 2
-text = "2000"
+text = "None"
 horizontal_alignment = 2
 
-[node name="Mass" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1448959444]
+[node name="Mass" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/GeneralInfos" unique_id=1448959444]
 layout_mode = 2
 text = "Mass"
 
-[node name="MassValue" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=320028099]
+[node name="MassValue" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/GeneralInfos" unique_id=320028099]
+unique_name_in_owner = true
 layout_mode = 2
-text = "500"
+text = "None"
 horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer" unique_id=916619789]
+clip_contents = true
+layout_mode = 2
+
+[node name="RayDescriptionContainer" type="GridContainer" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer" unique_id=865907347]
+layout_mode = 2
+columns = 2
+
+[node name="Rays" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/RayDescriptionContainer" unique_id=1446851765]
+layout_mode = 2
+text = "Number of rays"
+
+[node name="NumberRays" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/RayDescriptionContainer" unique_id=1325090342]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "None"
+horizontal_alignment = 2
+
+[node name="FOV" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/RayDescriptionContainer" unique_id=1739909270]
+layout_mode = 2
+text = "FOV"
+
+[node name="FOVValue" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer/RayDescriptionContainer" unique_id=1414376104]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "None"
+horizontal_alignment = 2
+
+[node name="SnakeVision" type="Label" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer" unique_id=923144907]
+layout_mode = 2
+text = "Snake Vision"
+horizontal_alignment = 1
+
+[node name="RayVisionContainer" type="HBoxContainer" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer" unique_id=1406408450]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="SnakeStat/MarginContainer/PanelContainer/VBoxContainer" unique_id=1213503376]
+clip_contents = true
+layout_mode = 2
