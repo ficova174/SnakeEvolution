@@ -1,6 +1,8 @@
 extends Head
 
 
+signal raycast_changed(colors: PackedColorArray)
+
 @onready var raycast_container = $RayCastContainer
 @onready var raycasts: Array[RayCast2D] = [$RayCastContainer/RayCast2D]
 
@@ -8,6 +10,13 @@ extends Head
 @export var fov: float = 270.0
 
 @onready var camera := $Camera2D
+
+var dark_green: Color = Color(0.0, 0.148, 0.0, 1.0)
+var light_green: Color = Color(0.0, 0.798, 0.0, 1.0)
+var dark_orange: Color = Color(0.442, 0.154, 0.024, 1.0)
+var light_orange: Color = Color(1.039, 0.552, 0.155, 1.0)
+var dark_red: Color = Color(0.339, 0.0, 0.0, 1.0)
+var light_red = Color(1.086, 0.0, 0.0, 1.0)
 
 
 func _ready() -> void:
@@ -26,17 +35,27 @@ func _physics_process(_delta: float) -> void:
 func _draw() -> void:
 	if not camera.is_current():
 		return
+
+	var colors: PackedColorArray
 	var width: int = 2
 	for raycast in raycasts:
+		var rotated_target_position: Vector2 = raycast.target_position.rotated(raycast.rotation)
 		if not raycast.is_colliding():
-			var rotated_target_position: Vector2 = raycast.target_position.rotated(raycast.rotation)
 			draw_line(Vector2.ZERO, rotated_target_position, Color.WHITE, width)
+			colors.append(Color.WHITE)
 			continue
 		var collider: Object = raycast.get_collider()
 		var target_position: Vector2 = to_local(raycast.get_collision_point())
+		var initial_actual_ratio: float = target_position.length()/rotated_target_position.length()
+		initial_actual_ratio = clampf(initial_actual_ratio, 0.0, 1.0)
 		if collider is Food:
 			draw_line(Vector2.ZERO, target_position, Color.DARK_GREEN, width)
+			colors.append(dark_green.lerp(light_green, initial_actual_ratio))
 		elif collider is Head:
 			draw_line(Vector2.ZERO, target_position, Color.DARK_ORANGE, width)
+			colors.append(dark_orange.lerp(light_orange, initial_actual_ratio))
 		elif collider is BodySegment:
 			draw_line(Vector2.ZERO, target_position, Color.DARK_RED, width)
+			colors.append(dark_red.lerp(light_red, initial_actual_ratio))
+
+	raycast_changed.emit(colors)

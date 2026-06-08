@@ -10,6 +10,7 @@ var head: Head
 
 @onready var ray_vision_container = %RayVisionContainer
 @export var ray_vision_container_height: float = 50.0
+var rays_array: Array[ColorRect] = []
 
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _on_agent_ready() -> void:
 	fov_value.text = str(head.fov) + "°"
 
 	spawn_agent_vision()
+	head.raycast_changed.connect(_on_raycast_changed)
 
 func _on_mass_changed(new_mass: int) -> void:
 	mass_value.text = str(new_mass)
@@ -34,3 +36,8 @@ func spawn_agent_vision() -> void:
 		ray_rect.color = Color(1, 1, 1, 1)
 		ray_rect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		ray_vision_container.add_child(ray_rect)
+		rays_array.append(ray_rect)
+
+func _on_raycast_changed(colors: PackedColorArray) -> void:
+	for i in range(colors.size()):
+		rays_array[i].color = colors[i]
