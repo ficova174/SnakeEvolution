@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dkegfiknufng6" path="res://scripts/world/map.gd" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cx8sd0qdused0" path="res://scenes/small_food.tscn" id="2_i7141"]
 [ext_resource type="Script" uid="uid://btj35ppqpy6po" path="res://scripts/world/camera_world.gd" id="3_tlwt5"]
-[ext_resource type="PackedScene" uid="uid://4mmf8siiy5xv" path="res://agent.tscn" id="5_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://4mmf8siiy5xv" path="res://scenes/agent.tscn" id="5_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://ccshud3cvos5g" path="res://scenes/player.tscn" id="5_036b0"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qfnet"]

@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://d3topmkqaeamt"]
+
+[node name="SnakeStat" type="Control" unique_id=1002639461]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1830477747]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1055291274]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer" unique_id=88139767]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer" unique_id=49575713]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer" unique_id=243739389]
+layout_mode = 2
+columns = 2
+
+[node name="Leaderboard" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=362680530]
+layout_mode = 2
+text = "Leaderboard place"
+
+[node name="LeaderBoardPlace" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1811471217]
+layout_mode = 2
+text = "5th"
+horizontal_alignment = 2
+
+[node name="Score" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=414619213]
+layout_mode = 2
+text = "Score"
+
+[node name="ScoreValue" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1179053266]
+layout_mode = 2
+text = "2000"
+horizontal_alignment = 2
+
+[node name="Mass" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=1448959444]
+layout_mode = 2
+text = "Mass"
+
+[node name="MassValue" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/VBoxContainer/GridContainer" unique_id=320028099]
+layout_mode = 2
+text = "500"
+horizontal_alignment = 2

@@ -16,19 +16,3 @@ fov = 270.0
 target_position = Vector2(600, 0)
 collision_mask = 14
 collide_with_areas = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="2" unique_id=1686589543]
-
-[node name="Control" type="Control" parent="CanvasLayer" index="0" unique_id=444060274]
-layout_mode = 3
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" index="0" unique_id=1765595494]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
