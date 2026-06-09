@@ -1,5 +1,6 @@
 #include "brain.hpp"
 #include <godot_cpp/core/class_db.hpp>
+#include <Eigen/LU>
 
 using namespace godot;
 
