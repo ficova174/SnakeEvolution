@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c0v4x23yu131l"]
+
+[ext_resource type="PackedScene" uid="uid://b78flgmvjdua6" path="res://scenes/food.tscn" id="1_bu5vl"]
+
+[node name="Food" unique_id=2091610270 instance=ExtResource("1_bu5vl")]
+mass = 10
+
+[node name="Sprite2D" parent="." index="0" unique_id=1086218916]
+scale = Vector2(2, 2)

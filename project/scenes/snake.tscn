@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://crtu12uxe0amb"]
+
+[ext_resource type="Script" uid="uid://ixwm3nnvnkhy" path="res://scripts/snake/snake.gd" id="1_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://dy1kvmih8cs5w" path="res://assets/head.png" id="1_onrkg"]
+[ext_resource type="Resource" uid="uid://7o8krshsw75g" path="res://resources/food_counter.tres" id="2_oj63r"]
+[ext_resource type="Resource" uid="uid://bppo61rom1bv5" path="res://resources/genome.tres" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://sl47mch8kp61" path="res://scripts/snake/head.gd" id="3_dqkch"]
+[ext_resource type="PackedScene" uid="uid://csekubfxstp2" path="res://scenes/body_segment.tscn" id="3_qlg0r"]
+[ext_resource type="Script" uid="uid://0xn051yfjh2d" path="res://scripts/snake/camera_snake.gd" id="6_tuyoq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
+radius = 32.01562
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
+size = Vector2(16.5, 47)
+
+[node name="Snake" type="Node2D" unique_id=974665004]
+z_index = 1
+script = ExtResource("1_i3pqv")
+food_counter = ExtResource("2_oj63r")
+genome = ExtResource("2_qhqgy")
+segment_scene = ExtResource("3_qlg0r")
+
+[node name="Head" type="CharacterBody2D" parent="." unique_id=1346012267]
+z_index = 1
+collision_layer = 2
+input_pickable = true
+script = ExtResource("3_dqkch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head" unique_id=1159462414]
+skew = 0.050614476
+shape = SubResource("CircleShape2D_4flbx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Head" unique_id=1421116832]
+texture = ExtResource("1_onrkg")
+
+[node name="Camera2D" type="Camera2D" parent="Head" unique_id=620570182]
+limit_enabled = false
+script = ExtResource("6_tuyoq")
+
+[node name="Mouth" type="Area2D" parent="Head" unique_id=823052363]
+collision_layer = 0
+collision_mask = 14
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Mouth" unique_id=167704163]
+position = Vector2(23.75, -0.5)
+shape = SubResource("RectangleShape2D_i3pqv")
+
+[node name="BodyContainer" type="Node2D" parent="." unique_id=1920097329]
+
+[node name="BodySegment" parent="BodyContainer" unique_id=425876287 instance=ExtResource("3_qlg0r")]

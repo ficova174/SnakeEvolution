@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://cx8sd0qdused0"]
-
-[ext_resource type="PackedScene" uid="uid://b78flgmvjdua6" path="res://scenes/food.tscn" id="1_fnjd7"]
-
-[node name="Food" unique_id=2091610270 instance=ExtResource("1_fnjd7")]
-mass = 1
