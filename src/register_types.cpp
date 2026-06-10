@@ -13,6 +13,7 @@ void initialize_brain_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 	GDREGISTER_CLASS(Brain);
+	GDREGISTER_CLASS(Layer);
 }
 
 void uninitialize_brain_module(ModuleInitializationLevel p_level) {

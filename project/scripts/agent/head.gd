@@ -3,6 +3,8 @@ extends Head
 
 signal raycast_changed(colors: PackedColorArray)
 
+var brain: Brain
+
 @onready var raycast_container = $RayCastContainer
 @onready var raycasts: Array[RayCast2D] = [$RayCastContainer/RayCast2D]
 
@@ -20,6 +22,12 @@ var light_red = Color(1.086, 0.0, 0.0, 1.0)
 
 
 func _ready() -> void:
+	print("test1")
+	brain = Brain.new()
+	var nb_info_raycast: int = 6
+	brain.first_initialize([number_rays * nb_info_raycast, 30, 30, 2])
+	print("test2")
+
 	var raycast_template: RayCast2D = raycasts[0]
 	var angle_step: float = fov / float(number_rays - 1)
 	raycasts.clear() # to avoid duplicating the central ray
@@ -30,6 +38,39 @@ func _ready() -> void:
 		raycasts.append(new_raycast)
 
 func _physics_process(_delta: float) -> void:
+	var inputs: PackedFloat32Array
+	for raycast in raycasts:
+		# collision?
+		# distance?
+		# Food?
+		# Head?
+		# Body?
+
+		if not raycast.is_colliding():
+			inputs.append(0.0)
+			inputs.append(raycast.target_position.x)
+			inputs.append(0.0)
+			inputs.append(0.0)
+			inputs.append(0.0)
+			continue
+		var collider: Object = raycast.get_collider()
+		inputs.append(1.0)
+		var target_position: Vector2 = to_local(raycast.get_collision_point())
+		inputs.append(target_position.length())
+		if collider is Food:
+			inputs.append(1.0)
+			inputs.append(0.0)
+			inputs.append(0.0)
+		elif collider is Head:
+			inputs.append(0.0)
+			inputs.append(1.0)
+			inputs.append(0.0)
+		elif collider is BodySegment:
+			inputs.append(0.0)
+			inputs.append(0.0)
+			inputs.append(1.0)
+
+	brain.feedback(inputs)
 	queue_redraw()
 
 func _draw() -> void:
@@ -46,7 +87,7 @@ func _draw() -> void:
 			continue
 		var collider: Object = raycast.get_collider()
 		var target_position: Vector2 = to_local(raycast.get_collision_point())
-		var initial_actual_ratio: float = target_position.length()/rotated_target_position.length()
+		var initial_actual_ratio: float = target_position.length() / rotated_target_position.length()
 		initial_actual_ratio = clampf(initial_actual_ratio, 0.0, 1.0)
 		if collider is Food:
 			draw_line(Vector2.ZERO, target_position, Color.DARK_GREEN, width)

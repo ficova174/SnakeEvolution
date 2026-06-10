@@ -4,33 +4,34 @@
 #include <Eigen/Core>
 
 namespace godot {
-    enum class ActivationFunction {
-        Sigmoid,
-        Tanh,
-        ReLU
-    };
+	enum class ActivationFunction {
+		Sigmoid,
+		Tanh,
+		ReLU
+	};
 
-    class Layer : public Resource {
-        GDCLASS(Layer, Resource)
+	class Layer : public Resource {
+		GDCLASS(Layer, Resource)
 
-        private:
-            Eigen::MatrixXf weights;
-            Eigen::VectorXf bias;
+		private:
+			Eigen::MatrixXf weights;
+			Eigen::VectorXf bias;
 
-            ActivationFunction activation;
+			ActivationFunction activation;
 
-        protected:
-            static void _bind_methods();
+		protected:
+			static void _bind_methods();
 
-        public:
-            Layer(int layerSize, int previousLayerSize, ActivationFunction activation);
-            ~Layer();
+		public:
+			Layer() {}
+			Layer(int layerSize, int previousLayerSize, ActivationFunction activation);
+			~Layer() {}
 
-            Eigen::MatrixXf getWeights() const { return weights; }
-            Eigen::VectorXf getBias() const { return bias; }
+			Eigen::MatrixXf getWeights() const { return weights; }
+			Eigen::VectorXf getBias() const { return bias; }
 
-            void mutate();
+			void mutate(float mutationRate);
 
-            Eigen::VectorXf feedforward(Eigen::VectorXf inputs);
-    };
+			Eigen::VectorXf feedforward(Eigen::VectorXf inputs);
+	};
 }

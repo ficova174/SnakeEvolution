@@ -4,28 +4,43 @@
 using namespace godot;
 
 void Brain::_bind_methods() {
-
+	ClassDB::bind_method(D_METHOD("first_initialize", "layersSizes"), &Brain::first_initialize);
+	ClassDB::bind_method(D_METHOD("feedforward", "inputs"), &Brain::feedforward);
 }
 
-Brain::Brain(int layersSizes[]) {
-	for (int i = 1; i < sizeof(layersSizes) / sizeof(layersSizes[0]); i++) {
+void Brain::first_initialize(const PackedInt32Array& layersSizes) {
+	this->layersSizes = layersSizes;
+	for (int i = 1; i < layersSizes.size(); i++) {
 		layers.emplace_back(layersSizes[i], layersSizes[i-1], ActivationFunction::Sigmoid);
 	}
 }
 
-Brain::~Brain() {
-
-}
-
 void Brain::mutate() {
 	for (Layer& layer : layers) {
-		layer.mutate();
+		layer.mutate(mutation_rate);
 	}
 }
 
-void Brain::feedforward(const Eigen::VectorXf& inputs) {
-	outputs = inputs;
+PackedFloat32Array Brain::feedforward(const PackedFloat32Array& inputs) {
+	Eigen::VectorXf outputs = godotToEigen(inputs);
 	for (Layer& layer : layers) {
 		outputs = layer.feedforward(outputs);
 	}
+	return eigenToGodot(outputs);
+}
+
+Eigen::VectorXf Brain::godotToEigen(const PackedFloat32Array& inputsGodot) {
+	Eigen::VectorXf inputsEigen(layersSizes[0], 1);
+	for (int i = 0; i < inputsGodot.size(); i++) {
+		inputsEigen(i) = inputsGodot[i];
+	}
+	return inputsEigen;
+}
+
+PackedFloat32Array Brain::eigenToGodot(const Eigen::VectorXf& outputsEigen) {
+	PackedFloat32Array outputsGodot;
+	for (int i = 0; i < outputsEigen.rows(); i++) {
+		outputsGodot.append(outputsEigen(i));
+	}
+	return outputsGodot;
 }

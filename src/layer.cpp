@@ -1,4 +1,4 @@
-#include <godot_cpp/core/class_db.hpp>=
+#include <godot_cpp/core/class_db.hpp>
 #include "layer.hpp"
 
 using namespace godot;
@@ -8,20 +8,18 @@ void Layer::_bind_methods() {
 }
 
 Layer::Layer(int layerSize, int previousLayerSize, ActivationFunction activation) {
-    // Random default range for floats is [0.0, 1.0]
-    float range {10.0f};
+    // Random default range for floats is [-1, 1]
+    float range{ 10.0f };
     weights = Eigen::MatrixXf::Random(layerSize, previousLayerSize) * range;
     bias = Eigen::VectorXf::Random(layerSize) * range;
 	this->activation = activation;
 }
 
-Layer::~Layer() {
-
-}
-
-void Layer::mutate() {
-	weights += mutation_weights;
-	bias += mutation_bias;
+void Layer::mutate(float mutationRate) {
+	Eigen::MatrixXf mutationWeights = Eigen::MatrixXf::Random(weights.rows(), weights.cols()) * mutationRate;
+	Eigen::MatrixXf mutationBias = Eigen::VectorXf::Random(bias.rows()) * mutationRate;
+	weights += mutationWeights;
+	bias += mutationBias;
 }
 
 Eigen::VectorXf Layer::feedforward(Eigen::VectorXf inputs) {
