@@ -22,11 +22,9 @@ var light_red = Color(1.086, 0.0, 0.0, 1.0)
 
 
 func _ready() -> void:
-	print("test1")
 	brain = Brain.new()
-	var nb_info_raycast: int = 6
+	var nb_info_raycast: int = 5
 	brain.first_initialize([number_rays * nb_info_raycast, 30, 30, 2])
-	print("test2")
 
 	var raycast_template: RayCast2D = raycasts[0]
 	var angle_step: float = fov / float(number_rays - 1)
@@ -37,7 +35,7 @@ func _ready() -> void:
 		raycast_container.add_child(new_raycast)
 		raycasts.append(new_raycast)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var inputs: PackedFloat32Array
 	for raycast in raycasts:
 		# collision?
@@ -70,7 +68,22 @@ func _physics_process(_delta: float) -> void:
 			inputs.append(0.0)
 			inputs.append(1.0)
 
-	brain.feedback(inputs)
+	var outputs: PackedFloat32Array = brain.feedforward(inputs)
+	print(outputs)
+
+	var dashed: bool = true if outputs[0] >= 0.5 else false
+	var direction: float = -90 + outputs[1] * 180 # direction from -90° to 90°
+
+	if dashed:
+		speed = move_toward(speed, max_speed, acceleration * delta)
+	else:
+		speed = move_toward(speed, min_speed, acceleration * delta)
+
+	rotation_degrees += direction
+
+	velocity = Vector2.RIGHT.rotated(rotation) * speed
+	move_and_slide()
+
 	queue_redraw()
 
 func _draw() -> void:

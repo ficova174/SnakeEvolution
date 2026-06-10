@@ -11,20 +11,29 @@ void Brain::_bind_methods() {
 void Brain::first_initialize(const PackedInt32Array& layersSizes) {
 	this->layersSizes = layersSizes;
 	for (int i = 1; i < layersSizes.size(); i++) {
-		layers.emplace_back(layersSizes[i], layersSizes[i-1], ActivationFunction::Sigmoid);
+		Ref<Layer> new_layer;
+		new_layer.instantiate();
+		new_layer->initialize(layersSizes[i], layersSizes[i-1], ActivationFunction::Sigmoid);
+		layers.append(new_layer);
 	}
 }
 
 void Brain::mutate() {
-	for (Layer& layer : layers) {
-		layer.mutate(mutation_rate);
+	for (int i = 0; i < layers.size(); i++) {
+		Ref<Layer> layer = layers[i];
+		if (layer.is_valid()) {
+			layer->mutate(mutation_rate);
+        }
 	}
 }
 
 PackedFloat32Array Brain::feedforward(const PackedFloat32Array& inputs) {
 	Eigen::VectorXf outputs = godotToEigen(inputs);
-	for (Layer& layer : layers) {
-		outputs = layer.feedforward(outputs);
+	for (int i = 0; i < layers.size(); i++) {
+		Ref<Layer> layer = layers[i];
+		if (layer.is_valid()) {
+			outputs = layer->feedforward(outputs);
+		}
 	}
 	return eigenToGodot(outputs);
 }

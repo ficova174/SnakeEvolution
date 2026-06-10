@@ -24,11 +24,9 @@ namespace godot {
 
 		public:
 			Layer() {}
-			Layer(int layerSize, int previousLayerSize, ActivationFunction activation);
 			~Layer() {}
 
-			Eigen::MatrixXf getWeights() const { return weights; }
-			Eigen::VectorXf getBias() const { return bias; }
+			void initialize(int currentLayerSize, int previousLayerSize, ActivationFunction activation);
 
 			void mutate(float mutationRate);
 

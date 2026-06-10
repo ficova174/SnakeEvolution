@@ -10,7 +10,7 @@ namespace godot {
 
 		private:
 			PackedInt32Array layersSizes{};
-			std::vector<Layer> layers{};
+			TypedArray<Layer> layers{};
 
 			float mutation_rate{};
 			void mutate();

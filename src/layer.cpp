@@ -7,11 +7,11 @@ void Layer::_bind_methods() {
 
 }
 
-Layer::Layer(int layerSize, int previousLayerSize, ActivationFunction activation) {
+void Layer::initialize(int currentLayerSize, int previousLayerSize, ActivationFunction activation) {
     // Random default range for floats is [-1, 1]
     float range{ 10.0f };
-    weights = Eigen::MatrixXf::Random(layerSize, previousLayerSize) * range;
-    bias = Eigen::VectorXf::Random(layerSize) * range;
+    weights = Eigen::MatrixXf::Random(currentLayerSize, previousLayerSize) * range;
+    bias = Eigen::VectorXf::Random(currentLayerSize) * range;
 	this->activation = activation;
 }
 

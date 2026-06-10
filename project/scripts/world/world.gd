@@ -24,7 +24,7 @@ func _ready() -> void:
 	spawn_small_food()
 
 	spawn_agent()
-	spawn_player()
+	# spawn_player()
 
 func spawn_agent() -> void:
 	var agent = agent_scene.instantiate()
