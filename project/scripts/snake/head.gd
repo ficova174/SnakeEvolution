@@ -2,8 +2,10 @@ class_name Head
 extends CharacterBody2D
 
 
-var acceleration: float
-var speed: float = min_speed
-var min_speed: float
-var max_speed: float
-var rotation_speed: float
+var genome: Genome
+var speed: float
+
+
+func initialize(genome_init: Genome):
+	genome = genome_init
+	speed = genome.min_speed

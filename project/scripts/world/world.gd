@@ -23,8 +23,9 @@ func _ready() -> void:
 	food_counter.setMaxFoodMass(map.width * map.height / 2)
 	spawn_small_food()
 
-	# spawn_agent()
-	spawn_player()
+	for i in range(10):
+		spawn_agent()
+	# spawn_player()
 
 func spawn_agent() -> void:
 	var agent = agent_scene.instantiate()

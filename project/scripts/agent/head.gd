@@ -71,14 +71,14 @@ func _physics_process(delta: float) -> void:
 	var outputs: PackedFloat32Array = brain.feedforward(inputs)
 
 	var dashed: bool = true if outputs[0] >= 0.5 else false
-	var direction: float = -90 + outputs[1] * 180 # direction from -90° to 90°
+	var target_angle: float = -PI/2 + outputs[1] * PI # direction from -90° to 90°
 
 	if dashed:
-		speed = move_toward(speed, max_speed, acceleration * delta)
+		speed = move_toward(speed, genome.max_speed, genome.acceleration * delta)
 	else:
-		speed = move_toward(speed, min_speed, acceleration * delta)
+		speed = move_toward(speed, genome.min_speed, genome.acceleration * delta)
 
-	rotation_degrees += direction
+	rotation = rotate_toward(rotation, target_angle, genome.rotation_speed * delta)
 
 	velocity = Vector2.RIGHT.rotated(rotation) * speed
 	move_and_slide()

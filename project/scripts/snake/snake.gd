@@ -23,9 +23,7 @@ var speed: float
 
 
 func _ready() -> void:
-	head.min_speed = genome.min_speed
-	head.max_speed = genome.max_speed
-	head.acceleration = genome.acceleration
+	head.initialize(genome)
 
 	head.input_event.connect(_on_head_clicked)
 	body_segments[0].input_event.connect(_on_body_clicked)
