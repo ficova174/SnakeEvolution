@@ -12,7 +12,6 @@ signal snake_died(snake: Snake)
 
 @export var mass: int = 10
 var speed: float
-@export var rotation_speed: float
 @export var segment_distance: float = 20.0
 
 @onready var body_container: Node2D = $BodyContainer

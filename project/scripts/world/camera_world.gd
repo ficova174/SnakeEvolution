@@ -3,7 +3,7 @@ extends Camera2D
 
 const CAMERA_SPEED: float = 500.0
 const ZOOM_INCREMENT: float = 0.05
-const MIN_ZOOM: float = 0.5
+const MIN_ZOOM: float = 0.1
 const MAX_ZOOM: float = 20.0
 
 

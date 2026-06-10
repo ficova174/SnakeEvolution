@@ -69,7 +69,6 @@ func _physics_process(delta: float) -> void:
 			inputs.append(1.0)
 
 	var outputs: PackedFloat32Array = brain.feedforward(inputs)
-	print(outputs)
 
 	var dashed: bool = true if outputs[0] >= 0.5 else false
 	var direction: float = -90 + outputs[1] * 180 # direction from -90° to 90°
@@ -89,7 +88,9 @@ func _physics_process(delta: float) -> void:
 func _draw() -> void:
 	if not camera.is_current():
 		return
+	draw_raycasts()
 
+func draw_raycasts() -> void:
 	var colors: PackedColorArray
 	var width: int = 2
 	for raycast in raycasts:

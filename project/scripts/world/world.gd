@@ -20,11 +20,11 @@ func _ready() -> void:
 	down_border.position = Vector2.DOWN * map.CELL_SIZE * map.height
 	right_border.position = Vector2.RIGHT * map.CELL_SIZE * map.width
 
-	food_counter.setMaxFoodMass(100)
+	food_counter.setMaxFoodMass(map.width * map.height / 2)
 	spawn_small_food()
 
-	spawn_agent()
-	# spawn_player()
+	# spawn_agent()
+	spawn_player()
 
 func spawn_agent() -> void:
 	var agent = agent_scene.instantiate()
