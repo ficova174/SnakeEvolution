@@ -1,0 +1,37 @@
+#include <godot_cpp/core/class_db.hpp>=
+#include "layer.hpp"
+
+using namespace godot;
+
+void Layer::_bind_methods() {
+
+}
+
+Layer::Layer(int layerSize, int previousLayerSize, ActivationFunction activation) {
+    // Random default range for floats is [0.0, 1.0]
+    float range {10.0f};
+    weights = Eigen::MatrixXf::Random(layerSize, previousLayerSize) * range;
+    bias = Eigen::VectorXf::Random(layerSize) * range;
+	this->activation = activation;
+}
+
+Layer::~Layer() {
+
+}
+
+void Layer::mutate() {
+	weights += mutation_weights;
+	bias += mutation_bias;
+}
+
+Eigen::VectorXf Layer::feedforward(Eigen::VectorXf inputs) {
+	Eigen::VectorXf z{ weights * inputs + bias };
+	switch (activation) {
+		case ActivationFunction::Sigmoid:
+			return (1.0f / (1.0f + (-z.array()).exp())).matrix();
+		case ActivationFunction::Tanh:
+			return z.array().tanh().matrix();
+		case ActivationFunction::ReLU:
+			return z.array().max(0.0f).matrix();
+	}
+}
