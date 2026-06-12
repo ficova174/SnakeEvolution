@@ -3,22 +3,20 @@ extends Head
 
 signal raycast_changed(colors: PackedColorArray)
 
-var brain: Brain
-
-@onready var raycast_container = $RayCastContainer
+@onready var raycast_container: Node2D = $RayCastContainer
 @onready var raycasts: Array[RayCast2D] = [$RayCastContainer/RayCast2D]
 
 @export var number_rays: int = 100
 @export var fov: float = 270.0
 
-@onready var camera := $Camera2D
+@onready var camera: Camera2D = $Camera2D
 
 var dark_green: Color = Color(0.0, 0.148, 0.0, 1.0)
 var light_green: Color = Color(0.0, 0.798, 0.0, 1.0)
 var dark_orange: Color = Color(0.442, 0.154, 0.024, 1.0)
 var light_orange: Color = Color(1.039, 0.552, 0.155, 1.0)
 var dark_red: Color = Color(0.339, 0.0, 0.0, 1.0)
-var light_red = Color(1.086, 0.0, 0.0, 1.0)
+var light_red: Color = Color(1.086, 0.0, 0.0, 1.0)
 
 
 func _ready() -> void:
