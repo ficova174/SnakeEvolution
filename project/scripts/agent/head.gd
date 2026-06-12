@@ -36,6 +36,25 @@ func _ready() -> void:
 		raycasts.append(new_raycast)
 
 func _physics_process(delta: float) -> void:
+	var inputs: PackedFloat32Array = get_inputs()
+	var outputs: PackedFloat32Array = brain.feedforward(inputs)
+
+	var dashed: bool = true if outputs[0] >= 0.5 else false
+	var target_angle: float = -PI/2 + outputs[1] * PI # direction from -90° to 90°
+
+	if dashed:
+		speed = move_toward(speed, genome.max_speed, genome.acceleration * delta)
+	else:
+		speed = move_toward(speed, genome.min_speed, genome.acceleration * delta)
+
+	rotation = rotate_toward(rotation, target_angle, genome.rotation_speed * delta)
+
+	velocity = Vector2.RIGHT.rotated(rotation) * speed
+	move_and_slide()
+
+	queue_redraw()
+
+func get_inputs() -> PackedFloat32Array:
 	var inputs: PackedFloat32Array
 	for raycast in raycasts:
 		# collision?
@@ -67,23 +86,7 @@ func _physics_process(delta: float) -> void:
 			inputs.append(0.0)
 			inputs.append(0.0)
 			inputs.append(1.0)
-
-	var outputs: PackedFloat32Array = brain.feedforward(inputs)
-
-	var dashed: bool = true if outputs[0] >= 0.5 else false
-	var target_angle: float = -PI/2 + outputs[1] * PI # direction from -90° to 90°
-
-	if dashed:
-		speed = move_toward(speed, genome.max_speed, genome.acceleration * delta)
-	else:
-		speed = move_toward(speed, genome.min_speed, genome.acceleration * delta)
-
-	rotation = rotate_toward(rotation, target_angle, genome.rotation_speed * delta)
-
-	velocity = Vector2.RIGHT.rotated(rotation) * speed
-	move_and_slide()
-
-	queue_redraw()
+	return inputs
 
 func _draw() -> void:
 	if not camera.is_current():

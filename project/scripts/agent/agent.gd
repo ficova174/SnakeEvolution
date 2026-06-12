@@ -1,13 +1,23 @@
 class_name Agent
 extends Snake
 
+
 signal mass_changed(new_mass: int)
 
 @onready var ui: CanvasLayer = $CanvasLayer
 
+var score: float
+var birth_time: int
+
+
 func _ready() -> void:
 	super()
+	birth_time = Time.get_ticks_msec()
 	ui.hide()
+
+func _physics_process(_delta: float) -> void:
+	super(_delta)
+	score = (Time.get_ticks_msec() / 1000.0) * mass
 
 func grow() -> void:
 	super()

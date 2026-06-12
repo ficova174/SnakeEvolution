@@ -21,3 +21,6 @@ collision_mask = 14
 collide_with_areas = true
 
 [node name="CanvasLayer" parent="." index="2" unique_id=1830477747 instance=ExtResource("3_yc63n")]
+
+[node name="Timer" type="Timer" parent="." index="3" unique_id=43129899]
+process_callback = 0
