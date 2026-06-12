@@ -1,17 +1,22 @@
 extends Node2D
 
 
-@onready var down_border = $Borders/DownBorder
-@onready var right_border = $Borders/RightBorder
-
 @onready var map = $MapSprite2D
 @onready var camera = $Camera2D
 
-@export var food_counter: FoodCounter
+@onready var down_border = $Borders/DownBorder
+@onready var right_border = $Borders/RightBorder
+
+@export var select_n_bests: int = 5
+
 @export var big_food_scene: PackedScene
 @export var small_food_scene: PackedScene
 
+@onready var food_counter = $FoodCounter
 @onready var snake_container = $SnakeContainer
+@onready var leaderboard = $Leaderboard
+@onready var timer = $Timer
+
 @export var agent_scene: PackedScene
 @export var player_scene: PackedScene
 
@@ -27,6 +32,8 @@ func _ready() -> void:
 		spawn_agent()
 	# spawn_player()
 
+	timer.timeout.connect(_on_timer_timeout)
+
 func spawn_agent() -> void:
 	var agent = agent_scene.instantiate()
 	spawn_snake(agent)
@@ -40,11 +47,13 @@ func spawn_snake(snake: Snake) -> void:
 		randf_range(0.0, map.width * map.CELL_SIZE),
 		randf_range(0.0, map.height * map.CELL_SIZE)
 	)
-	snake.exit_snake.connect(_on_exit_snake)
+	snake.snake_exit.connect(_on_snake_exit)
 	snake.snake_died.connect(_on_snake_died)
 	snake_container.add_child(snake)
+	if snake is Agent:
+		leaderboard.add_agent(snake)
 
-func _on_exit_snake(camera_center: Vector2, camera_zoom: Vector2) -> void:
+func _on_snake_exit(camera_center: Vector2, camera_zoom: Vector2) -> void:
 	camera.position = camera_center
 	camera.zoom = camera_zoom
 	camera.make_current()
@@ -55,6 +64,8 @@ func _on_snake_died(snake: Snake) -> void:
 		var big_food: Food = big_food_scene.instantiate()
 		big_food.position = body_segment.global_position
 		call_deferred("add_child", big_food)
+	if snake is Agent:
+		leaderboard.remove_agent(snake)
 
 func _physics_process(_delta: float) -> void:
 	spawn_small_food()
@@ -68,3 +79,13 @@ func spawn_small_food() -> void:
 		)
 		add_child(small_food)
 		food_counter.increment(small_food.mass)
+
+func _on_timer_timeout() -> void:
+	if select_n_bests > leaderboard.agent_array.size():
+		push_error("Selecting more agents than there are existing is forbidden")
+		return
+	for i in range(leaderboard.agent_array.size()):
+		if i <= select_n_bests:
+			spawn_agent()
+			mutate()
+		leaderboard.agent_array[i].die()

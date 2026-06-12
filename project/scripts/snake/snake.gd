@@ -2,7 +2,7 @@ class_name Snake
 extends Node2D
 
 
-signal exit_snake(camera_center: Vector2, camera_zoom: Vector2)
+signal snake_exit(camera_center: Vector2, camera_zoom: Vector2)
 signal snake_died(snake: Snake)
 
 @export var food_counter: FoodCounter
@@ -85,11 +85,11 @@ func follow_snake() -> void:
 	camera.make_current()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("exit_snake"):
+	if event.is_action_pressed("snake_exit"):
 		leave_snake()
 
 func leave_snake() -> void:
-	exit_snake.emit(camera.global_position, camera.zoom)
+	snake_exit.emit(camera.global_position, camera.zoom)
 
 func _physics_process(_delta: float) -> void:
 	var body_to_head: Vector2 = body_segments[0].position.direction_to(head.position)

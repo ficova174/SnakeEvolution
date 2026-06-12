@@ -16,6 +16,12 @@ func add_agent(agent: Agent) -> void:
 	score_array.append(agent.score)
 	agent_array.append(agent)
 
+func remove_agent(agent: Agent) -> void:
+	for i in range(agent_array.size()):
+		if agent_array[i] == agent:
+			score_array.remove_at(i)
+			agent_array.remove_at(i)
+
 func _physics_process(delta: float) -> void:
 	update()
 	sort()
