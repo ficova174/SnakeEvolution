@@ -19,6 +19,10 @@ namespace godot {
 
 			ActivationFunction activation;
 
+			// Random default range for floats is [-1, 1]
+			float initialRange{ 10.0f };
+			float mutationRate{ initialRange * 0.01f };
+
 		protected:
 			static void _bind_methods();
 
@@ -28,7 +32,7 @@ namespace godot {
 
 			void initialize(int currentLayerSize, int previousLayerSize, ActivationFunction activation);
 
-			void mutate(float mutationRate);
+			void mutate();
 
 			Eigen::VectorXf feedforward(Eigen::VectorXf inputs);
 	};

@@ -17,7 +17,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
-	score = (Time.get_ticks_msec() / 1000.0) * mass
+	score = (Time.get_ticks_msec() - birth_time) * mass / 1000.0
 
 func grow() -> void:
 	super()

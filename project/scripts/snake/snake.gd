@@ -85,7 +85,7 @@ func follow_snake() -> void:
 	camera.make_current()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("snake_exit"):
+	if event.is_action_pressed("exit_snake"):
 		leave_snake()
 
 func leave_snake() -> void:

@@ -1,21 +1,22 @@
 extends Node2D
 
 
-@onready var map = $MapSprite2D
-@onready var camera = $Camera2D
+@onready var map: Sprite2D = $MapSprite2D
+@onready var camera: Camera2D = $Camera2D
 
-@onready var down_border = $Borders/DownBorder
-@onready var right_border = $Borders/RightBorder
+@onready var down_border: CollisionShape2D = $Borders/DownBorder
+@onready var right_border: CollisionShape2D = $Borders/RightBorder
 
-@export var select_n_bests: int = 5
-
+@export var food_counter: Resource
 @export var big_food_scene: PackedScene
 @export var small_food_scene: PackedScene
 
-@onready var food_counter = $FoodCounter
-@onready var snake_container = $SnakeContainer
-@onready var leaderboard = $Leaderboard
-@onready var timer = $Timer
+@onready var snake_container: Node2D = $SnakeContainer
+
+@onready var leaderboard: Node2D = $Leaderboard
+
+@onready var selection_agents: Timer = $SelectionComponent
+@export var select_n_bests: int = 5
 
 @export var agent_scene: PackedScene
 @export var player_scene: PackedScene
@@ -32,7 +33,7 @@ func _ready() -> void:
 		spawn_agent()
 	# spawn_player()
 
-	timer.timeout.connect(_on_timer_timeout)
+	selection_agents.timeout.connect(_on_selection_agents_timeout)
 
 func spawn_agent() -> void:
 	var agent = agent_scene.instantiate()
@@ -80,12 +81,17 @@ func spawn_small_food() -> void:
 		add_child(small_food)
 		food_counter.increment(small_food.mass)
 
-func _on_timer_timeout() -> void:
+func _on_selection_agents_timeout() -> void:
+	print("test")
 	if select_n_bests > leaderboard.agent_array.size():
 		push_error("Selecting more agents than there are existing is forbidden")
 		return
-	for i in range(leaderboard.agent_array.size()):
-		if i <= select_n_bests:
-			spawn_agent()
-			mutate()
-		leaderboard.agent_array[i].die()
+	for i in range(leaderboard.agent_array.size() - 1, -1, -1):
+		if i >= select_n_bests:
+			leaderboard.agent_array[i].die()
+		else:
+			var new_agent = agent_scene.instantiate()
+			spawn_snake(new_agent)
+			var parent_agent = leaderboard.agent_array[i]
+			new_agent.head.brain = parent_agent.head.brain.duplicate()
+			new_agent.head.brain.mutate()

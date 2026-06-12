@@ -5,6 +5,7 @@ using namespace godot;
 
 void Brain::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("first_initialize", "layersSizes"), &Brain::first_initialize);
+	ClassDB::bind_method(D_METHOD("mutate"), &Brain::mutate);
 	ClassDB::bind_method(D_METHOD("feedforward", "inputs"), &Brain::feedforward);
 }
 
@@ -22,7 +23,7 @@ void Brain::mutate() {
 	for (int i = 0; i < layers.size(); i++) {
 		Ref<Layer> layer = layers[i];
 		if (layer.is_valid()) {
-			layer->mutate(mutation_rate);
+			layer->mutate();
         }
 	}
 }

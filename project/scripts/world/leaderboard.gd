@@ -1,7 +1,8 @@
-extends Resource
+class_name Leaderboard
+extends Node2D
 
-var score_array: Array[float]
-var agent_array: Array[Agent]
+var score_array: Array[float] = []
+var agent_array: Array[Agent] = []
 
 func add_agent(agent: Agent) -> void:
 	if score_array.is_empty():
@@ -21,8 +22,9 @@ func remove_agent(agent: Agent) -> void:
 		if agent_array[i] == agent:
 			score_array.remove_at(i)
 			agent_array.remove_at(i)
+			return
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	update()
 	sort()
 

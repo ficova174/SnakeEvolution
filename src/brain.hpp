@@ -12,9 +12,6 @@ namespace godot {
 			PackedInt32Array layersSizes{};
 			TypedArray<Layer> layers{};
 
-			float mutation_rate{};
-			void mutate();
-
 		protected:
 			static void _bind_methods();
 
@@ -23,6 +20,8 @@ namespace godot {
 			~Brain() {}
 
 			void first_initialize(const PackedInt32Array& layersSizes);
+
+			void mutate();
 
 			PackedFloat32Array feedforward(const PackedFloat32Array& inputs);
 

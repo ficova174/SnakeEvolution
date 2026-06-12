@@ -3,6 +3,7 @@ extends CanvasLayer
 
 @onready var agent: Agent = get_parent()
 var head: Head
+var vision: Node2D
 
 @onready var mass_value: Label = %MassValue
 @onready var number_rays: Label = %NumberRays
@@ -20,18 +21,18 @@ func _ready() -> void:
 	ray_vision_container.custom_minimum_size = Vector2(0, ray_vision_container_height)
 
 func _on_agent_ready() -> void:
-	head = agent.head
-	number_rays.text = str(head.number_rays)
-	fov_value.text = str(head.fov) + "°"
+	vision = agent.head.vision
+	number_rays.text = str(vision.number_rays)
+	fov_value.text = str(vision.fov) + "°"
 
 	spawn_agent_vision()
-	head.raycast_changed.connect(_on_raycast_changed)
+	vision.raycast_changed.connect(_on_raycast_changed)
 
 func _on_mass_changed(new_mass: int) -> void:
 	mass_value.text = str(new_mass)
 
 func spawn_agent_vision() -> void:
-	for i in range(head.number_rays):
+	for i in range(vision.number_rays):
 		var ray_rect: ColorRect = ColorRect.new()
 		ray_rect.color = Color.WHITE
 		ray_rect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
