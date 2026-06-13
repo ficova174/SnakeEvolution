@@ -15,8 +15,8 @@ extends Node2D
 
 @onready var leaderboard: Node2D = $Leaderboard
 
-@onready var selection_agents: Timer = $SelectionComponent
-@export var select_n_bests: int = 5
+@export var snakes_counter: Resource
+@export var select_n_bests: int = 10
 
 @export var agent_scene: PackedScene
 @export var player_scene: PackedScene
@@ -29,14 +29,13 @@ func _ready() -> void:
 	food_counter.setMaxFoodMass(map.width * map.height / 2)
 	spawn_small_food()
 
-	for i in range(10):
+	for i in range(snakes_counter.max_snakes):
 		spawn_agent()
 	# spawn_player()
 
-	selection_agents.timeout.connect(_on_selection_agents_timeout)
-
 func spawn_agent() -> void:
 	var agent = agent_scene.instantiate()
+	leaderboard.add_agent(agent)
 	spawn_snake(agent)
 
 func spawn_player() -> void:
@@ -51,8 +50,7 @@ func spawn_snake(snake: Snake) -> void:
 	snake.snake_exit.connect(_on_snake_exit)
 	snake.snake_died.connect(_on_snake_died)
 	snake_container.add_child(snake)
-	if snake is Agent:
-		leaderboard.add_agent(snake)
+	snakes_counter.increment()
 
 func _on_snake_exit(camera_center: Vector2, camera_zoom: Vector2) -> void:
 	camera.position = camera_center
@@ -65,11 +63,14 @@ func _on_snake_died(snake: Snake) -> void:
 		var big_food: Food = big_food_scene.instantiate()
 		big_food.position = body_segment.global_position
 		call_deferred("add_child", big_food)
+
+	snakes_counter.decrement()
 	if snake is Agent:
 		leaderboard.remove_agent(snake)
 
 func _physics_process(_delta: float) -> void:
 	spawn_small_food()
+	spawn_bests_agents()
 
 func spawn_small_food() -> void:
 	while food_counter.food_mass < food_counter.max_food_mass:
@@ -81,16 +82,15 @@ func spawn_small_food() -> void:
 		add_child(small_food)
 		food_counter.increment(small_food.mass)
 
-func _on_selection_agents_timeout() -> void:
-	if select_n_bests > leaderboard.agent_array.size():
-		push_warning("Selecting more agents than there are existing")
-	for i in range(leaderboard.agent_array.size() - 1, -1, -1):
-		if i < select_n_bests:
-			var new_agent = agent_scene.instantiate()
-			spawn_snake(new_agent)
-			var parent_agent = leaderboard.agent_array[i]
-			new_agent.head.brain = parent_agent.head.brain.clone()
-			new_agent.head.brain.mutate()
-			parent_agent.die()
-		else:
-			leaderboard.agent_array[i].die()
+func spawn_bests_agents() -> void:
+	while snakes_counter.actual_snakes < snakes_counter.max_snakes:
+		var random_agent_selected: int = randi() % max(select_n_bests, leaderboard.agent_array.size())
+		var parent_agent: Agent = leaderboard.agent_array[random_agent_selected]
+		spawn_mutated_copy(parent_agent)
+
+func spawn_mutated_copy(parent_agent: Agent) -> void:
+	var new_agent = agent_scene.instantiate()
+	spawn_snake(new_agent)
+	new_agent.head.brain = parent_agent.head.brain.clone()
+	new_agent.head.brain.mutate()
+	leaderboard.add_agent(new_agent)

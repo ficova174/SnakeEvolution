@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SnakeCounter" format=3 uid="uid://da5bs05uyb2he"]
+
+[ext_resource type="Script" uid="uid://bnk6jfg0xmw7v" path="res://scripts/world/snake_counter.gd" id="1_2ngmy"]
+
+[resource]
+script = ExtResource("1_2ngmy")
+metadata/_custom_type_script = "uid://bnk6jfg0xmw7v"
