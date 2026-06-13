@@ -23,12 +23,13 @@ func _physics_process(delta: float) -> void:
 
 	rotation = rotate_toward(rotation, target_angle, genome.rotation_speed * delta)
 
-	velocity = Vector2.RIGHT.rotated(rotation) * speed
-	move_and_slide()
+	super(delta)
 
 	queue_redraw()
 
 func _draw() -> void:
 	if not camera.is_current():
+		vision.visible = false
 		return
-	vision.draw_raycasts()
+	vision.visible = true
+	vision.queue_redraw()

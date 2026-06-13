@@ -31,6 +31,7 @@ namespace godot {
 			~Layer() {}
 
 			void initialize(int currentLayerSize, int previousLayerSize, ActivationFunction activation);
+			Ref<Layer> clone() const;
 
 			void mutate();
 

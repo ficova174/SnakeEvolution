@@ -5,6 +5,7 @@ using namespace godot;
 
 void Brain::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("first_initialize", "layersSizes"), &Brain::first_initialize);
+	ClassDB::bind_method(D_METHOD("clone"), &Brain::clone);
 	ClassDB::bind_method(D_METHOD("mutate"), &Brain::mutate);
 	ClassDB::bind_method(D_METHOD("feedforward", "inputs"), &Brain::feedforward);
 }
@@ -17,6 +18,19 @@ void Brain::first_initialize(const PackedInt32Array& layersSizes) {
 		new_layer->initialize(layersSizes[i], layersSizes[i-1], ActivationFunction::Sigmoid);
 		layers.append(new_layer);
 	}
+}
+
+Ref<Brain> Brain::clone() const {
+	Ref<Brain> new_brain;
+	new_brain.instantiate();
+	new_brain->layersSizes = this->layersSizes;
+    for (int i = 0; i < layers.size(); i++) {
+        Ref<Layer> current_layer = layers[i]; 
+        if (current_layer.is_valid()) {
+            new_brain->layers.append(current_layer->clone());
+        }
+    }
+    return new_brain;
 }
 
 void Brain::mutate() {

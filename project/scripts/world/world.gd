@@ -82,16 +82,15 @@ func spawn_small_food() -> void:
 		food_counter.increment(small_food.mass)
 
 func _on_selection_agents_timeout() -> void:
-	print("test")
 	if select_n_bests > leaderboard.agent_array.size():
-		push_error("Selecting more agents than there are existing is forbidden")
-		return
+		push_warning("Selecting more agents than there are existing")
 	for i in range(leaderboard.agent_array.size() - 1, -1, -1):
-		if i >= select_n_bests:
-			leaderboard.agent_array[i].die()
-		else:
+		if i < select_n_bests:
 			var new_agent = agent_scene.instantiate()
 			spawn_snake(new_agent)
 			var parent_agent = leaderboard.agent_array[i]
-			new_agent.head.brain = parent_agent.head.brain.duplicate()
+			new_agent.head.brain = parent_agent.head.brain.clone()
 			new_agent.head.brain.mutate()
+			parent_agent.die()
+		else:
+			leaderboard.agent_array[i].die()

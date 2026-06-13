@@ -10,5 +10,4 @@ func _physics_process(delta: float) -> void:
 	else:
 		speed = move_toward(speed, genome.min_speed, genome.acceleration * delta)
 
-	velocity = transform.x * speed
-	move_and_slide()
+	super(delta)

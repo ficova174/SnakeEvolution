@@ -18,6 +18,7 @@ var light_red: Color = Color(1.086, 0.0, 0.0, 1.0)
 
 
 func _ready() -> void:
+	visible = false
 	var raycast_template: RayCast2D = raycasts[0]
 	var angle_step: float = fov / float(number_rays - 1)
 	raycasts.clear() # to avoid duplicating the central ray
@@ -61,7 +62,7 @@ func get_inputs() -> PackedFloat32Array:
 			inputs.append(1.0)
 	return inputs
 
-func draw_raycasts() -> void:
+func _draw() -> void:
 	var colors: PackedColorArray
 	var width: int = 2
 	for raycast in raycasts:
@@ -83,5 +84,8 @@ func draw_raycasts() -> void:
 		elif collider is BodySegment:
 			draw_line(Vector2.ZERO, target_position, Color.DARK_RED, width)
 			colors.append(dark_red.lerp(light_red, initial_actual_ratio))
+		else:
+			draw_line(Vector2.ZERO, target_position, Color.BLACK, width)
+			colors.append(Color.BLACK)
 
 	raycast_changed.emit(colors)

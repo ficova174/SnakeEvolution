@@ -20,6 +20,7 @@ namespace godot {
 			~Brain() {}
 
 			void first_initialize(const PackedInt32Array& layersSizes);
+			Ref<Brain> clone() const;
 
 			void mutate();
 

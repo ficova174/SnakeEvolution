@@ -13,6 +13,15 @@ void Layer::initialize(int currentLayerSize, int previousLayerSize, ActivationFu
 	this->activation = activation;
 }
 
+Ref<Layer> Layer::clone() const {
+	Ref<Layer> new_layer;
+	new_layer.instantiate();
+	new_layer->weights = this->weights;
+	new_layer->bias = this->bias;
+	new_layer->activation = this->activation;
+	return new_layer;
+}
+
 void Layer::mutate() {
 	Eigen::MatrixXf mutationWeights = Eigen::MatrixXf::Random(weights.rows(), weights.cols()) * mutationRate;
 	Eigen::MatrixXf mutationBias = Eigen::VectorXf::Random(bias.rows()) * mutationRate;

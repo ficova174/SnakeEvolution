@@ -6,22 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://d3topmkqaeamt" path="res://scenes/agent_ui.tscn" id="3_yc63n"]
 [ext_resource type="Script" uid="uid://ng0gjqgprtiv" path="res://scripts/agent/vision_component.gd" id="4_dg1j7"]
 
-[sub_resource type="GDExtension" id="GDExtension_dg1j7"]
+[sub_resource type="Brain" id="Brain_dg1j7"]
 resource_local_to_scene = true
 
 [node name="Agent" unique_id=974665004 instance=ExtResource("1_jv27j")]
 script = ExtResource("2_lug0u")
 
 [node name="Head" parent="." index="0" unique_id=1346012267]
+visible = false
 script = ExtResource("2_dhb2b")
-brain = SubResource("GDExtension_dg1j7")
+brain = SubResource("Brain_dg1j7")
 
 [node name="VisionComponent" type="Node2D" parent="Head" index="4" unique_id=45870609]
 script = ExtResource("4_dg1j7")
 
 [node name="RayCast2D" type="RayCast2D" parent="Head/VisionComponent" index="0" unique_id=672272911]
 target_position = Vector2(600, 0)
-collision_mask = 14
+collision_mask = 15
 collide_with_areas = true
 
 [node name="CanvasLayer" parent="." index="2" unique_id=1830477747 instance=ExtResource("3_yc63n")]
