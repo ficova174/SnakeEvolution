@@ -20,6 +20,7 @@ extends Node2D
 
 @export var agent_counter: Resource
 
+@export var max_agents: int = 100
 @export var select_n_bests: int = 10
 @export var food_tile_ratio: int = 10
 
@@ -31,7 +32,7 @@ func _ready() -> void:
 	food_counter.setMaxFoodMass(map.width * map.height / food_tile_ratio)
 	spawn_small_food()
 
-	agent_counter.setMaxAgents(0)
+	agent_counter.setMaxAgents(max_agents)
 	for i in range(agent_counter.max_agents):
 		spawn_agent()
 	# spawn_player()
@@ -52,7 +53,7 @@ func spawn_snake(snake: Snake) -> void:
 	)
 	snake.snake_exit.connect(_on_snake_exit)
 	snake.snake_died.connect(_on_snake_died)
-	snake_container.add_child(snake)
+	snake_container.call_deferred("add_child", snake)
 
 func _on_snake_exit(camera_center: Vector2, camera_zoom: Vector2) -> void:
 	camera.position = camera_center
@@ -77,6 +78,14 @@ func spawn_bests_agents() -> void:
 	var parent_agent: Agent = leaderboard.agent_array[random_agent_selected]
 	spawn_mutated_copy(parent_agent)
 
+func spawn_mutated_copy(parent_agent: Agent) -> void:
+	var new_agent = agent_scene.instantiate()
+	spawn_snake(new_agent)
+	leaderboard.add_agent(new_agent)
+	print(new_agent.head)
+	new_agent.head.brain = parent_agent.head.brain.clone()
+	new_agent.head.brain.mutate()
+
 func _physics_process(_delta: float) -> void:
 	spawn_small_food()
 
@@ -89,10 +98,3 @@ func spawn_small_food() -> void:
 		)
 		add_child(small_food)
 		food_counter.increment(small_food.mass)
-
-func spawn_mutated_copy(parent_agent: Agent) -> void:
-	var new_agent = agent_scene.instantiate()
-	spawn_snake(new_agent)
-	leaderboard.add_agent(new_agent)
-	new_agent.head.brain = parent_agent.head.brain.clone()
-	new_agent.head.brain.mutate()
