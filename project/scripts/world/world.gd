@@ -84,8 +84,9 @@ func spawn_small_food() -> void:
 
 func spawn_bests_agents() -> void:
 	while snakes_counter.actual_snakes < snakes_counter.max_snakes:
-		var random_agent_selected: int = randi() % max(select_n_bests, leaderboard.agent_array.size())
+		var random_agent_selected: int = randi() % min(select_n_bests, leaderboard.agent_array.size() - 1)
 		var parent_agent: Agent = leaderboard.agent_array[random_agent_selected]
+		print(leaderboard.score_array[0])
 		spawn_mutated_copy(parent_agent)
 
 func spawn_mutated_copy(parent_agent: Agent) -> void:
