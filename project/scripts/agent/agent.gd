@@ -3,6 +3,7 @@ extends Snake
 
 
 signal mass_changed(new_mass: int)
+signal score_changed(new_score: float)
 
 @onready var vision: Node2D = $Head/VisionComponent
 @onready var ui: CanvasLayer = $CanvasLayer
@@ -26,7 +27,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
-	score = mass ** 5 * (Time.get_ticks_msec() - birth_time) / 1000.0
+	var life_duration_seconds: float = (Time.get_ticks_msec() - birth_time) / 1000.0
+	score = mass ** 3 / life_duration_seconds
+	score_changed.emit(score)
 
 func grow() -> void:
 	var before_size: int = body_segments.size()
