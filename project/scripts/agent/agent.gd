@@ -9,9 +9,13 @@ signal mass_changed(new_mass: int)
 var score: float
 var birth_time: int
 
+var mutated_brain: Brain
+
 
 func _ready() -> void:
 	super()
+	if mutated_brain != null:
+		head.brain = mutated_brain
 	birth_time = Time.get_ticks_msec()
 	ui.hide()
 

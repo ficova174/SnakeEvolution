@@ -48,8 +48,8 @@ func spawn_player() -> void:
 
 func spawn_snake(snake: Snake) -> void:
 	snake.position = Vector2(
-		randf_range(0.0, map.width * map.CELL_SIZE),
-		randf_range(0.0, map.height * map.CELL_SIZE)
+		randf_range(map.CELL_SIZE, (map.width - 1) * map.CELL_SIZE),
+		randf_range(map.CELL_SIZE, (map.height - 1) * map.CELL_SIZE)
 	)
 	snake.snake_exit.connect(_on_snake_exit)
 	snake.snake_died.connect(_on_snake_died)
@@ -80,11 +80,11 @@ func spawn_bests_agents() -> void:
 
 func spawn_mutated_copy(parent_agent: Agent) -> void:
 	var new_agent = agent_scene.instantiate()
+	var mutated_brain = parent_agent.head.brain.clone()
+	mutated_brain.mutate()
+	new_agent.mutated_brain = mutated_brain
 	spawn_snake(new_agent)
 	leaderboard.add_agent(new_agent)
-	print(new_agent.head)
-	new_agent.head.brain = parent_agent.head.brain.clone()
-	new_agent.head.brain.mutate()
 
 func _physics_process(_delta: float) -> void:
 	spawn_small_food()

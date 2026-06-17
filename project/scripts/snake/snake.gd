@@ -17,7 +17,7 @@ var speed: float
 @onready var body_container: Node2D = $BodyContainer
 @onready var body_segments: Array[BodySegment] = [$BodyContainer/BodySegment]
 
-@onready var head: CharacterBody2D = $Head
+@onready var head: Head = $Head
 @onready var head_shape: CollisionShape2D = $Head/CollisionShape2D
 @onready var mouth: Area2D = $Head/Mouth
 @onready var camera: Camera2D = $Head/Camera2D

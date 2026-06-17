@@ -5,6 +5,7 @@
 
 [node name="Food" unique_id=2091610270 instance=ExtResource("1_bu5vl")]
 script = ExtResource("2_k7byq")
+mass = 2
 
 [node name="Sprite2D" parent="." index="0" unique_id=1086218916]
 scale = Vector2(2, 2)
