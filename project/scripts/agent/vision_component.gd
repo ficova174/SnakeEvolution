@@ -3,9 +3,9 @@ extends Node2D
 
 signal raycast_changed(colors: PackedColorArray)
 
-var nb_info_raycast: int = 5
+var nb_info_raycast: int = 6
 @export var number_rays: int = 50
-@export var fov: float = 270.0
+@export var fov: float = 360.0
 
 @onready var raycasts: Array[RayCast2D] = [$RayCast2D]
 
@@ -20,26 +20,32 @@ var light_red: Color = Color(1.086, 0.0, 0.0, 1.0)
 func _ready() -> void:
 	visible = false
 	var raycast_template: RayCast2D = raycasts[0]
-	var angle_step: float = fov / float(number_rays - 1)
+	var angle_step: float = fov / float(number_rays - 1) # number of areas
 	raycasts.clear() # to avoid duplicating the central ray
 	for i in range(number_rays):
 		var new_raycast: RayCast2D = raycast_template.duplicate()
 		new_raycast.rotation_degrees = -(fov / 2.0) + i * angle_step
 		self.add_child(new_raycast)
 		raycasts.append(new_raycast)
+	raycast_template.queue_free()
+
+func add_vision_exception(node: CollisionObject2D) -> void:
+	for raycast in raycasts:
+		raycast.add_exception(node)
 
 func get_inputs() -> PackedFloat32Array:
 	var inputs: PackedFloat32Array
 	for raycast in raycasts:
 		# collision?
 		# distance?
-		# Food?
+		# BigFood?
+		# SmallFood?
 		# Head?
-		# Body?
+		# Body/wall?
 
 		if not raycast.is_colliding():
 			inputs.append(0.0)
-			inputs.append(raycast.target_position.x)
+			inputs.append(1.0)
 			inputs.append(0.0)
 			inputs.append(0.0)
 			inputs.append(0.0)
@@ -47,16 +53,29 @@ func get_inputs() -> PackedFloat32Array:
 		var collider: Object = raycast.get_collider()
 		inputs.append(1.0)
 		var target_position: Vector2 = to_local(raycast.get_collision_point())
-		inputs.append(target_position.length())
-		if collider is Food:
+		inputs.append(target_position.length() / raycast.target_position.length()) # to normalize
+		if collider is BigFood:
+			inputs.append(1.0)
+			inputs.append(0.0)
+			inputs.append(0.0)
+			inputs.append(0.0)
+		elif collider is SmallFood:
+			inputs.append(0.0)
 			inputs.append(1.0)
 			inputs.append(0.0)
 			inputs.append(0.0)
 		elif collider is Head:
 			inputs.append(0.0)
+			inputs.append(0.0)
 			inputs.append(1.0)
 			inputs.append(0.0)
 		elif collider is BodySegment:
+			inputs.append(0.0)
+			inputs.append(0.0)
+			inputs.append(0.0)
+			inputs.append(1.0)
+		else: # treat wall as BodySegment
+			inputs.append(0.0)
 			inputs.append(0.0)
 			inputs.append(0.0)
 			inputs.append(1.0)

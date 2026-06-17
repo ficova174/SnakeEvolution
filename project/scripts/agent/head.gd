@@ -14,14 +14,14 @@ func _physics_process(delta: float) -> void:
 	var outputs: PackedFloat32Array = brain.feedforward(inputs)
 
 	var dashed: bool = true if outputs[0] >= 0.5 else false
-	var target_angle: float = -PI/2 + outputs[1] * PI # direction from -90° to 90°
+	var rotation_amount: float = (outputs[1] * 2.0) - 1.0 # turn sigmoid to tanh
 
 	if dashed:
 		speed = move_toward(speed, genome.max_speed, genome.acceleration * delta)
 	else:
 		speed = move_toward(speed, genome.min_speed, genome.acceleration * delta)
 
-	rotation = rotate_toward(rotation, target_angle, genome.rotation_speed * delta)
+	rotation += rotation_amount * genome.rotation_speed * delta
 
 	super(delta)
 

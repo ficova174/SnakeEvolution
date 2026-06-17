@@ -14,5 +14,5 @@ func initialize(genome_init: Genome):
 
 func _physics_process(delta: float) -> void:
 	var motion: Vector2 = Vector2.RIGHT.rotated(rotation) * speed * delta
-	if move_and_collide(motion) != null:
+	if move_and_collide(motion) != null: # wall collisions thanks to collision mask
 		die.emit()

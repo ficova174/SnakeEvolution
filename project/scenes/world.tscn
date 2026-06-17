@@ -23,6 +23,7 @@ agent_scene = ExtResource("5_7r4gi")
 player_scene = ExtResource("5_036b0")
 agent_counter = ExtResource("5_e3hyu")
 max_agents = 50
+select_n_bests = 3
 
 [node name="MapSprite2D" type="Sprite2D" parent="." unique_id=944645621]
 texture_filter = 1

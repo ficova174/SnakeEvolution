@@ -10,6 +10,8 @@ signal snake_died(snake: Snake)
 @export var genome: Genome
 @export var segment_scene: PackedScene
 
+var is_dead: bool = false
+
 @export var mass: int = 10
 var speed: float
 @export var segment_distance: float = 20.0
@@ -73,8 +75,13 @@ func grow() -> void:
 		actual_mass += segment_mass
 
 func die() -> void:
+	if is_dead:
+		return
+	is_dead = true
+
 	if camera.is_current():
 		leave_snake()
+
 	snake_died.emit(self)
 	queue_free()
 
