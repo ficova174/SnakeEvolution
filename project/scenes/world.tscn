@@ -31,8 +31,8 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
 script = ExtResource("2_fj7yv")
-width = 50
-height = 50
+width = 100
+height = 100
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=674570870]
 limit_enabled = false
