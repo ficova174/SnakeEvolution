@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AgentCounter" format=3 uid="uid://ywhagfg52djo"]
+
+[ext_resource type="Script" uid="uid://bnk6jfg0xmw7v" path="res://scripts/agent/agent_counter.gd" id="1_3dchc"]
+
+[resource]
+script = ExtResource("1_3dchc")
+metadata/_custom_type_script = "uid://bnk6jfg0xmw7v"

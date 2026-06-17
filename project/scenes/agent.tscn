@@ -13,7 +13,6 @@ resource_local_to_scene = true
 script = ExtResource("2_lug0u")
 
 [node name="Head" parent="." index="0" unique_id=1346012267]
-visible = false
 script = ExtResource("2_dhb2b")
 brain = SubResource("Brain_dg1j7")
 

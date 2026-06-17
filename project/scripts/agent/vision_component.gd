@@ -4,7 +4,7 @@ extends Node2D
 signal raycast_changed(colors: PackedColorArray)
 
 var nb_info_raycast: int = 5
-@export var number_rays: int = 100
+@export var number_rays: int = 50
 @export var fov: float = 270.0
 
 @onready var raycasts: Array[RayCast2D] = [$RayCast2D]

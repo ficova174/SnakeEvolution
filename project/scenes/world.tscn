@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://btj35ppqpy6po" path="res://scripts/world/camera_world.gd" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://4mmf8siiy5xv" path="res://scenes/agent.tscn" id="5_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://ccshud3cvos5g" path="res://scenes/player.tscn" id="5_036b0"]
-[ext_resource type="Resource" uid="uid://da5bs05uyb2he" path="res://resources/snakes_counter.tres" id="5_e3hyu"]
+[ext_resource type="Resource" uid="uid://ywhagfg52djo" path="res://resources/agent_counter.tres" id="5_e3hyu"]
 [ext_resource type="Script" uid="uid://brcvgy2v6u03f" path="res://scripts/world/leaderboard.gd" id="11_q5onr"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qfnet"]
@@ -19,9 +19,9 @@ script = ExtResource("1_i7141")
 food_counter = ExtResource("2_w7kh3")
 big_food_scene = ExtResource("2_4mrxx")
 small_food_scene = ExtResource("2_i7141")
-snakes_counter = ExtResource("5_e3hyu")
 agent_scene = ExtResource("5_7r4gi")
 player_scene = ExtResource("5_036b0")
+agent_counter = ExtResource("5_e3hyu")
 
 [node name="MapSprite2D" type="Sprite2D" parent="." unique_id=944645621]
 texture_filter = 1
@@ -31,8 +31,8 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
 script = ExtResource("2_fj7yv")
-width = 100
-height = 100
+width = 20
+height = 20
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=674570870]
 limit_enabled = false
