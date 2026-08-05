@@ -11,16 +11,7 @@ extends Node2D
 @export var big_food_scene: PackedScene
 @export var small_food_scene: PackedScene
 
-@export var agent_scene: PackedScene
-@export var player_scene: PackedScene
 
-@onready var snake_container: Node2D = $SnakeContainer
-
-@onready var leaderboard: Node2D = $Leaderboard
-
-@export var agent_counter: Resource
-
-@export var max_agents: int = 100
 @export var select_n_bests: int = 10
 @export var food_tile_ratio: int = 10
 
@@ -31,29 +22,6 @@ func _ready() -> void:
 
 	food_counter.setMaxFoodMass(map.width * map.height / food_tile_ratio)
 	spawn_small_food()
-
-	agent_counter.setMaxAgents(max_agents)
-	for i in range(agent_counter.max_agents):
-		spawn_agent()
-	# spawn_player()
-
-func spawn_agent() -> void:
-	var agent = agent_scene.instantiate()
-	leaderboard.add_agent(agent)
-	spawn_snake(agent)
-
-func spawn_player() -> void:
-	var player = player_scene.instantiate()
-	spawn_snake(player)
-
-func spawn_snake(snake: Snake) -> void:
-	snake.position = Vector2(
-		randf_range(map.CELL_SIZE, (map.width - 1) * map.CELL_SIZE),
-		randf_range(map.CELL_SIZE, (map.height - 1) * map.CELL_SIZE)
-	)
-	snake.snake_exit.connect(_on_snake_exit)
-	snake.snake_died.connect(_on_snake_died)
-	snake_container.call_deferred("add_child", snake)
 
 func _on_snake_exit(camera_center: Vector2, camera_zoom: Vector2) -> void:
 	camera.position = camera_center
@@ -67,13 +35,7 @@ func _on_snake_died(snake: Snake) -> void:
 		big_food.position = body_segment.global_position
 		call_deferred("add_child", big_food)
 
-	if snake is Agent:
-		spawn_bests_agents()
-		leaderboard.remove_agent(snake)
-
 func spawn_bests_agents() -> void:
-	if leaderboard.agent_array.is_empty():
-		return
 	var random_agent_selected: int = randi() % min(select_n_bests, leaderboard.agent_array.size())
 	var parent_agent: Agent = leaderboard.agent_array[random_agent_selected]
 	spawn_mutated_copy(parent_agent)
@@ -84,7 +46,6 @@ func spawn_mutated_copy(parent_agent: Agent) -> void:
 	mutated_brain.mutate()
 	new_agent.mutated_brain = mutated_brain
 	spawn_snake(new_agent)
-	leaderboard.add_agent(new_agent)
 
 func _physics_process(_delta: float) -> void:
 	spawn_small_food()

@@ -9,6 +9,14 @@
 [sub_resource type="Brain" id="Brain_dg1j7"]
 resource_local_to_scene = true
 
+[sub_resource type="GDScript" id="GDScript_po862"]
+script/source = "class_name BodySegment
+extends Area2D
+
+var moving: bool = false # used when spawning a snake to avoid spring like effect
+var mass: int = 10
+"
+
 [node name="Agent" unique_id=974665004 instance=ExtResource("1_jv27j")]
 script = ExtResource("2_lug0u")
 
@@ -23,5 +31,10 @@ script = ExtResource("4_dg1j7")
 target_position = Vector2(600, 0)
 collision_mask = 15
 collide_with_areas = true
+
+[node name="BodySegment" parent="BodyContainer" parent_id_path=PackedInt32Array(1920097329) index="0" unique_id=425876287]
+collision_layer = 4
+collision_mask = 0
+script = SubResource("GDScript_po862")
 
 [node name="CanvasLayer" parent="." index="2" unique_id=1830477747 instance=ExtResource("3_yc63n")]

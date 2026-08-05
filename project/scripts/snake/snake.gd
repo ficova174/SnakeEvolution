@@ -7,7 +7,6 @@ signal snake_died(snake: Snake)
 
 @export var food_counter: FoodCounter
 
-@export var genome: Genome
 @export var segment_scene: PackedScene
 
 var is_dead: bool = false
@@ -15,9 +14,6 @@ var is_dead: bool = false
 @export var mass: int = 10
 var speed: float
 @export var segment_distance: float = 20.0
-
-@onready var body_container: Node2D = $BodyContainer
-@onready var body_segments: Array[BodySegment] = [$BodyContainer/BodySegment]
 
 @onready var head: Head = $Head
 @onready var head_shape: CollisionShape2D = $Head/CollisionShape2D

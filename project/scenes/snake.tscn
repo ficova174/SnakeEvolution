@@ -3,10 +3,40 @@
 [ext_resource type="Script" uid="uid://ixwm3nnvnkhy" path="res://scripts/snake/snake.gd" id="1_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://dy1kvmih8cs5w" path="res://assets/head.png" id="1_onrkg"]
 [ext_resource type="Resource" uid="uid://7o8krshsw75g" path="res://resources/food_counter.tres" id="2_oj63r"]
-[ext_resource type="Resource" uid="uid://bppo61rom1bv5" path="res://resources/genome.tres" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://clppydcgaroh5" path="res://assets/body.png" id="3_1p8c4"]
 [ext_resource type="Script" uid="uid://sl47mch8kp61" path="res://scripts/snake/head.gd" id="3_dqkch"]
-[ext_resource type="PackedScene" uid="uid://csekubfxstp2" path="res://scenes/body_segment.tscn" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://0xn051yfjh2d" path="res://scripts/snake/camera_snake.gd" id="6_tuyoq"]
+
+[sub_resource type="GDScript" id="GDScript_1p8c4"]
+
+[sub_resource type="Resource" id="Resource_oj63r"]
+script = SubResource("GDScript_1p8c4")
+
+[sub_resource type="GDScript" id="GDScript_po862"]
+script/source = "class_name BodySegment
+extends Area2D
+
+var moving: bool = false # used when spawning a snake to avoid spring like effect
+var mass: int = 10
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bae6x"]
+radius = 32.06244
+
+[sub_resource type="PackedScene" id="PackedScene_oj63r"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("BodySegment", "collision_layer", "collision_mask", "script", "Area2D", "Sprite2D", "texture", "shape", "CollisionShape2D"),
+"node_count": 3,
+"node_ids": PackedInt32Array(425876287, 182603496, 74376346),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0, 0, 0, 5, 5, -1, 1, 6, 3, 0, 0, 0, 8, 4, -1, 1, 7, 4, 0),
+"variants": [4, 0, SubResource("GDScript_po862"), ExtResource("3_1p8c4"), SubResource("CircleShape2D_bae6x")],
+"version": 3
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4flbx"]
 radius = 32.01562
@@ -18,8 +48,10 @@ size = Vector2(16.5, 47)
 z_index = 1
 script = ExtResource("1_i3pqv")
 food_counter = ExtResource("2_oj63r")
-genome = ExtResource("2_qhqgy")
-segment_scene = ExtResource("3_qlg0r")
+genome = SubResource("Resource_oj63r")
+segment_scene = SubResource("PackedScene_oj63r")
+mass = null
+segment_distance = null
 
 [node name="Head" type="CharacterBody2D" parent="." unique_id=1346012267]
 z_index = 1
@@ -47,7 +79,3 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Mouth" unique_id=167704163]
 position = Vector2(23.75, -0.5)
 shape = SubResource("RectangleShape2D_i3pqv")
-
-[node name="BodyContainer" type="Node2D" parent="." unique_id=1920097329]
-
-[node name="BodySegment" parent="BodyContainer" unique_id=425876287 instance=ExtResource("3_qlg0r")]
